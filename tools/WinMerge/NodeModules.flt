@@ -1,0 +1,16 @@
+name: Node.js - node_modulesなどを除外
+desc: 詳細が必要な時はココに記述
+
+## def: 対象の扱い方
+## include or exclude
+##   include: フィルタに記入されたファイル・ディレクトリを比較対象から除く
+##   exclude: フィルタに記入されたファイル・ディレクトリ以外を比較対象から除く
+def: include
+
+## f: 対象ファイルのパターンを指定(正規表現)
+## d: 対象ディレクトリのパターンを指定(正規表現)
+
+d: \\node_modules$ ## Filter for directory
+
+f: \.log$ 	## Filter for filename
+f: \.exe$ 	## Filter for filename

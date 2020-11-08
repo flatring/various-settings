@@ -1,0 +1,100 @@
+{
+  "editor.autoClosingBrackets": "beforeWhitespace",
+  "editor.autoIndent": "keep",
+  "editor.fontFamily": "'MyricaM M', 'MSゴシック'",
+  "editor.fontSize": 14,
+  "editor.detectIndentation": false,
+  "editor.renderWhitespace": "boundary",
+  "editor.renderControlCharacters": true,
+  "editor.renderIndentGuides": true,
+  "editor.rulers": [
+    80,
+    100
+  ],
+  "editor.tabSize": 2,
+  "editor.minimap.enabled": false, // あんまり便利じゃない
+  "editor.minimap.maxColumn": 120,
+  "editor.quickSuggestionsDelay": 500,
+  "editor.suggestSelection": "first",
+  "extensions.ignoreRecommendations": true,
+  // "files.autoGuessEncoding": true,
+  "files.exclude": {
+    // "**/.vscode": true,
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/.DS_Store": true,
+    "**/storage": true,
+    "**/node_modules": true
+  },
+  "files.eol": "\n", // LF
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "files.trimFinalNewlines": true,
+  "search.exclude": {
+    "**/node_modules/**/*": true,
+    "**/jquery*.js": true
+  },
+  "terminal.integrated.shell.windows": "C:\\Program Files\\Git\\bin\\bash.exe", // 端末 = git bush
+  "window.title": "${rootName}${separator}${dirty}${activeEditorLong}",
+  "window.zoomLevel": 0,
+  "workbench.editor.enablePreviewFromQuickOpen": false,
+  "workbench.colorTheme": "Visual Studio 2019 Dark",
+  "workbench.startupEditor": "newUntitledFile",
+
+  // 拡張機能 ------------------------------------------------------------------
+  // Git
+  "git.confirmSync": false,
+
+  // PlantUML
+  // Alternate plantuml.jar location. Leave it blank to use integrated jar.
+  // "plantuml.jar": "C:\\Apps\\PlantUML\\plantuml.jar",
+  // "plantuml.exportFormat": "png",
+
+  // Markdown All in One
+  "markdown.extension.list.indentationSize": "inherit",
+  "markdown.extension.orderedList.marker": "one",
+
+  // Markdown Preview Enhanced
+  // https://github.com/shd101wyy/vscode-markdown-preview-enhanced/blob/master/package.json
+  // "markdown-preview-enhanced.previewTheme": "atom-material.css",
+  // "markdown-preview-enhanced.previewTheme": "newsprint.css",
+  // "markdown-preview-enhanced.revealjsTheme": "beige.css",
+  // "markdown-preview-enhanced.revealjsTheme": "moon.css",
+  // "markdown-preview-enhanced.revealjsTheme": "sky.css",
+  // "markdown-preview-enhanced.previewTheme": "one-dark.css",
+  "markdown-preview-enhanced.revealjsTheme": "white.css",
+
+  // 言語識別子 ----------------------------------------------------------------
+  // 1.参考
+  //    1. https://code.visualstudio.com/docs/languages/identifiers#_known-language-identifiers
+  // 1. Command Palette (Ctrl + Shift + P)
+  // 2. Preferences: Configure Language Specific Settings
+  "[css]": {},
+  "[json]": {
+    "editor.quickSuggestions": {
+      "strings": true
+    },
+    "editor.tabSize": 2
+  },
+  "[markdown]": {
+    "editor.insertSpaces": true,
+    "editor.tabSize": 4,
+    "files.trimTrailingWhitespace": false,
+    "editor.defaultFormatter": "yzhang.markdown-all-in-one"
+  },
+  "[html]": {},
+  "[javascript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+  "[jade]": { // Pug
+  },
+  "[sql]": {
+    "editor.insertSpaces": false,
+    "editor.tabSize": 4
+  },
+  "git.autofetch": true,
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+}
