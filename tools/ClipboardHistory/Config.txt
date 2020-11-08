@@ -1,0 +1,436 @@
+﻿;==========================定型文メニューの作成=======================
+;@NoteHotkey=【ホットキー名】,【ダブルプッシュの反応時間(ms)】
+;---------------------------------------------------------------------
+;  　【ダブルプッシュの反応時間】を省略時はシングルプッシュで表示
+;　　　　　※ホットキー名の詳細は http://ahkwiki.net/KeyList や http://ahkwiki.net/Hotkeys をご確認ください
+;---------------------------------------------------------------------
+;  ・『-』 ：セパレーター追加
+;  ・『+』 ：サブメニュー開始
+;  ・『*』 ：簡易サブメニュー開始
+;  ・『..』：サブメニュー終了
+;  ・『貼り付け文字列』あるいは『項目名 | 貼り付け文字列』で項目を作成
+;  ・『項目名 |(改行)～文章～(改行)/E』あるいは『貼り付け`r`n文字列』で改行を含む文章を登録
+;  ・行頭の『;』でコメント
+;  ・前後の半角スペースおよびタブは無視（無視させたくない時は端に『` 文字列 `』などとする）
+;  ・アクセスキーは項目名に『個人情報(&P)』等のようにして設定(0-9A-Zのみ使用可能)
+;  ・エスケープ記号は『`』
+;  　　→改行コードCR,LFは『`r』『`n』、文字として『|』『`』自体を使う時は『`|』『``』、行頭で文字として『+』『*』『..』『;』を使う時は『`+』『`..』『`;』
+;  ・『項目名 || コマンド名 | パラメタ１ | パラメタ２...』で各種コマンドが使えます
+;  　　→パラメタを実行時に入力する時は『~INPUT』とする
+;  　　→パラメタに空文字を指定する時は『~BLANK』とする
+;  　　→パラメタ指定を省略する時は『~NULL』とする
+;  　　→パラメタ内で文字列として『~BLANK』『~NULL』『~INPUT』を使う時は『~~BLANK』『~~NULL』『~~INPUT』とする
+;  ※同じ階層のメニューに同じ項目名を複数使うことはできません
+;  ※定型文メニューを使用しない時は『@NoteHotkey=』のように空にするか、該当箇所を削除してください
+;  ※改行を含む巨大なテキストの貼り付けには PasteFile コマンドの使用をおすすめします。
+;=====================================================================
+
+;定型文サンプル１（Shiftダブルプッシュで表示）
+;　■で始まる項目は、選択されているテキスト（非選択時はクリップボードの文字列）に対して実行されるコマンドです。
+
+@NoteHotkey=Shift,360
++text list(&a)
+  &m メール  | personal@abc.mn
+  -
+  &l GitLabパスフレーズ | aaaa
+  &h GitHubパスフレーズ | bbbb
+  ..
+  -
+  +JavaScript(&j)
+  &l log  | console.log(' [ 1 ] ');
+  &l log table  || RegExReplace | s).+ |  console.table($0);
+  &l log literal  | let name = '一郎';`r`nconsole.log(`僕の名前は${name}です。`);
+  ..
+  +shell:(&s)
+  &p profile       | shell:profile
+  &p program files | shell:ProgramFiles
+  &s send to       | shell:SendTo
+  &s start up      | shell:Startup
+  ..
+  -
+  &s スタートアップフォルダー  | %USERPROFILE%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
+  &y システムプロパティの表示  | %WINDIR%\System32\SystemPropertiesComputerName.exe
+..
++Excel(&x)
+  &1 No. | =N(OFFSET(RC,-1,0))+1
+  &2 ヘッダー 印刷日 | 印刷日:&D
+  &3 フッター ページ | - &P / &N -
+  +VBA(&v)
+  &1 アクティブシートのふりがな削除 | ActiveSheet.UsedRange.Cells.Phonetics.Delete
+  ..
+..
++Markdown(&m)
+  &i image           || RegExReplace | s).+ | ![image](./images/xxx.png =600x)
+  &l ページ内リンク  || RegExReplace | s).+ | [$0]($1)
+  &p PlantUML        || RegExReplace | s).+ | {{<!-- ```plantuml -->`r`n@startuml`r`nstart`r`nif (判定) then (yes)`r`n    :yes後の処理;`r`nelse (no)`r`n    :no後の処理;`r`nendif`r`nstop`r`n@enduml`r`n<!-- ``` -->`r`n}}
+  &t content tip     | ::: tip`r`n1. コメント内容`r`n:::`r`n
+  &d content details | ::: details title`r`n1. コメント内容`r`n:::`r`n
+  &w content warning | ::: warning`r`n1. コメント内容`r`n:::`r`n
+  &d content danger  | ::: danger`r`n1. コメント内容`r`n:::`r`n
+  &ld lint disable   | <!-- markdownlint-disable MD002 MD041 -->`r`n
+  &le lint enable    | <!-- markdownlint-enable -->`r`n
+..
++Git(&g)
+  &r rename(mv)      | git mv
+  &l status          | git status
+  &t file delete     | git rm FILE && git commit -m "delete."
+  &a commit漏れ      | git add FILE && git commit --amend
+  &g log grep        | git log --grep="ABC"
+..
++矢印(&y)
+  &1 →  |` → `
+  &2 ←  |` ← `
+..
++日付・時刻(&D)
+  &1 yyyyMMdd             | yyyyMMdd || Date
+  &2 yyyyMMdd_HHmmss      | yyyyMMdd_HHmmss || Date
+  &3 yyyy/MM/dd HH:mm:ss  | yyyy/MM/dd HH:mm:ss || Date
+  &4 yyyy/MM/dd(ddd)      | yyyy/MM/dd(ddd) || Date
+  &5 yyyy/MM/dd           | yyyy/MM/dd || Date
+  &6 yyyy年M月d日(ddd)    | yyyy年M月d日(ddd) || Date
+  &7 d日(ddd)             | d日(ddd) || Date
+  &8 M/d(ddd)             | M/d(ddd) || Date
+..
++文字コード(&1)
+  &1 タブ文字 | `  `
+  &2 CrLf     | `r`n
+  &3 Cr       | `r
+  &4 Lf       | `n
+  &5 html 半角スペース(改行しない)  |  &nbsp;
+  &6 html n幅スペース  |  &ensp;
+  &7 html m幅スペース  |  &emsp;
+  &8 html <  |  &lt;
+  &9 html >  |  &gt;
+  &0 html "  |  &quot;
+  &a html && |  &amp;
+  &b html × |  &times;
+  &c html ÷  |  &divide;
+..
++会社情報(&5)
+  &0 proxy    | idaaa{Tab}password{Enter} | KeyStroke
+  &1 会社名   | 株式会社ABC
+  &3 郵便番号 | 123-4321
+  &4 住所1    | 東京都a区b1-2-3
+  &5 住所2    | Cビル4F
+  &6 住所英   | C Bld., b, a Ku, Tokyo To, 123-4321, Japan
+  &7 URL      | https://company-name.come/
+  &8 TEL      | 03-1234-4321
+  &9 携帯     | 090-1234-4321
+  &a Google Map (street view) | https://goo.gl/maps/1111
+..
+-
++テキスト修飾(&T)
+  ■> 引用記号(&A)    || RegExReplace | m)^ | > `
+  ■// コメント(&C)    || RegExReplace | m)^ | // `
+  ■/* コメント */(&C)    || RegExReplace | s).+ | /* $0 */
+  ■<!-- HTML コメント -->(&C)  || RegExReplace | s).+ | <!-- $0 -->
+  ■`````` タグ ``````(&t)  || RegExReplace | s).+ | ```````r`n$0`r`n``````
+  ■<font color="Red"> 色 </font>(&f)  || RegExReplace | s).+ | <font color="Red">`r`n$0`r`n</font>
+  ■<pre><code> タグ </code></pre>(&P)  || RegExReplace | s).+ | <pre><code class="sql">`r`n$0`r`n</code></pre>
+  -
+  ■> 引用記号の削除(&E)    || RegExReplace | m)^> `|^>
+  ■// コメントの削除(&F)    || RegExReplace | m)^// `|^//
+  -
+  ■(小かっこ)(&G)    || RegExReplace | s).+ | ($0)
+  ■[角かっこ](&H)    || RegExReplace | s).+ | [$0]
+  ■【大かっこ】(&Y)    || RegExReplace | s).+ | 【$0】
+  -
+  ■行ソート(&O)      || Sort
+  ■行ソート(逆順)(&P)    || Sort | R
+  ■行ソート(重複行削除)(&Q)  || Sort | U
+  ■行頭に連番追加(&R)    || AddLineNumber | : `
+..
++テキスト変換(&U)
+  ■キャメルケースに変換(&c)  || RegExReplace | (^`|_)(.) | $U{2}
+  ■パスカルケースに変換(&p)  || RegExReplace | (_)(.) | $U{2}
+;  ■スネークケースに変換(&s) || RegExReplace | ^([A-Z])`|([A-Z]) | $L{1}_$L{2}
+  ■スネークケースに変換(&s)  || RegExReplace | ([A-Z]) | _$L{1}
+  ■ケバブケースに変換(&s)    || RegExReplace | ([A-Z]) | -$L{1}
+  -
+  ■大文字に変換(&b) || RegExReplace | s).+ | $U{0}
+  ■小文字に変換(&s) || RegExReplace | s).+ | $L{0}
+  -
+  ■半角に変換(&k)   || SingleStr
+  ■全角に変換(&l)   || DoubleStr
+  -
+  ■カタカナ→ひらがな変換(&m) || HiraStr
+  ■ひらがな→カタカナ変換(&n) || KataStr
+  -
+  ■URLエンコード  || EncodeURL
+  ■URLデコード    || EncodeURL | 1
+  -
+  ■base64エンコード  || EncodeBase64
+  ■base64デコード    || EncodeBase64 | 1
+  ■base64エンコード(Data URI) || EncodeBase64 | 0 | Binary | 1
+  ■base64デコード(バイナリ)   || EncodeBase64 | 1 | Binary
+;  -
+;  ■改行整形(36文字)(&S)    || FormatLine | 36
+;  ■改行整形(36文字+ぶら下げ)(&T)  || FormatLine | 36 | ,,,.,、,。,，,．,？,！,）,」,』,!,),?,\,]
+  -
+  ■HTML エスケープ(&U)    || StrReplace | & | &amp; || StrReplace | < | &lt; || StrReplace | > | &gt; || StrReplace | " | &quot;
+  ■HTML 半角スペース(&s)  || StrReplace | & | &nbsp; || StrReplace | < | &lt; || StrReplace | > | &gt; || StrReplace | " | &quot;
+  -
+  ■任意の文字を置き換え(&V)  || RegExReplace | ~INPUT | ~INPUT
+  ■正規表現で置換(行末に<br>追加)(&W)|| RegExReplace | m)$ | <br>
+..
+-
++ファイル関連(&F)
+  ファイルを開く...(&A)    || <#blank,,#run> || FilePath
+  -
+  ファイルのフルパス名...(&B) || FilePath
+  フォルダのフルパス名...(&C) || FolderPath
+  -
+  指定ファイルの差し込み(&D) || PasteFile | ReadMe.txt
+  ファイルの差し込み...(&E)  || PasteFile
+  -
+  ■ファイルに追記...(&F)   || AppendFile | `r`n
+  ■指定ファイルに追記(&G)  || AppendFile | `r`n------------------`r`n | ~BLANK | 簡易メモ.txt | UTF-8
+  ■ファイルを上書き(&H)    || AppendFile | ~BLANK | ~BLANK | ~BLANK | UTF-8 | delete
+..
++クリップボード関連(&C)
+  ■分割コピー(改行区切り)(&A)        || SplitCopy
+  ■分割コピー(改行区切り+逆順)(&B)   || SplitCopy | ~NULL | ~NULL | R
+  ■分割コピー(タブ区切り)(&C)        || SplitCopy | `  `
+  -
+  ■キープ(&D)            || Keep
+  -
+  クリップボードマネージャーを開く(&E)...      || OpenManager
+  クリップボード履歴メニューを開く(&F)...      || OpenHistory
+;  -
+;  現在のクリップボードをクリア(&G)      || <#blank,,#clip>
+;  クリップボード履歴をクリア(&H)        || ClearHistory
+;  クリップボード履歴を確認せずにクリア(&I)    || ClearHistory | 0
+  -
+  キープ中の履歴をクリア(&J)        || ClearKeep
+  キープ中の履歴を確認せずにクリア(&K)      || ClearKeep | 0
+;  -
+;  クリップボード履歴の整理:100番目以降の履歴を削除(&L)  || CompactHistory | 100 | 0   | 0
+;  クリップボード履歴の整理:500文字以上の履歴を削除(&M)  || CompactHistory | 0   | 500 | 0
+;  クリップボード履歴の整理:重複する履歴を削除(&N)    || CompactHistory | 0   | 0   | 1
+  -
+  クリップボード履歴を書き出し(&O)      || ExportHistory || AppendFile | ~BLANK | ~BLANK | ~BLANK | UTF-8 | delete
+  1-10番目の履歴を連結して貼り付け(&P)      || ExportHistory | ~NULL | 1-10
+..
++設定関連(&O)
+  FIFO ペーストON(&A)        || FifoMode | 1
+  FIFO ペーストOFF(&B)        || FifoMode | 0
+  FIFO ペーストの状態をトグル(&C)      || FifoMode
+  -
+  ダイレクトペーストON(&D)      || DirectMode | 1
+  ダイレクトペーストOFF(&E)      || DirectMode | 0
+  ダイレクトペースの状態をトグル(&F)    || DirectMode
+  -
+  シンプルモードON(&G)        || SimpleMode | 1
+  シンプルモードOFF(&H)        || SimpleMode | 0
+  シンプルモードの状態をトグル(&I)    || SimpleMode
+  -
+  ホットキーをサスペンド(&J)      || SuspendHotkey | 1
+  ホットキーのサスペンドを解除(&K)    || SuspendHotkey | 0
+  ホットキーのサスペンド状態をトグル(&L)    || SuspendHotkey
+  -
+  クリップボード履歴をサスペンド(&M)    || SuspendHistory | 1
+  クリップボード履歴のサスペンドを解除(&N)  || SuspendHistory | 0
+  クリップボード履歴のサスペンド状態をトグル(&O)  || SuspendHistory
+  -
+  設定画面を開く(&P)        || OpenConfig
+  現在の設定ファイルを読み込み直す(&Q)    || Reload
+  アプリを終了(&R)        || Exit
+..
+-
+キーストローク(&K)      | username{Tab}password | KeyStroke
+マウスカーソル位置の色(&R)    || ColorPicker
+■選択テキストの文字数(&L)    || StrLen
+■計算(&S)        || Calc
+-
+■Googleで検索(&G)      || <#copy,,#run> || StrReplace | # | %23 || RegExReplace | ^ | https://www.google.co.jp/search?hl=ja&lr=lang_ja&q=
+■Googleで翻訳(&te) 英→日  || <#copy,,#run> || StrReplace | # | %23 || RegExReplace | ^ | https://translate.google.co.jp/?hl=ja&tab=cT#en/ja/
+■Googleで翻訳(&te) 日→英  || <#copy,,#run> || StrReplace | # | %23 || RegExReplace | ^ | https://translate.google.co.jp/?hl=ja&tab=cT#ja/en/
+-
+クリップボードマネージャーを開く(&W)...    || OpenManager
+登録済み定型文コマンドの一覧・検索(&E)... || OpenManager | 1
+
+
+;==========================高度な使い方===============================
+;@NoteHotkey=【表示名】||【ホットキー名】,【ダブルプッシュの反応時間(ms)】,【アプリの実行ファイル名】
+;---------------------------------------------------------------------
+;【表示名】
+;  ・表示名を設定すると、クリップボード履歴メニュー内にも定型文メニューを追加
+;  　この時『||』以下の【ホットキー名】【ダブルプッシュの反応時間ms】【アプリの実行ファイル名】は省略可能
+;    (例) @NoteHotkey=定型文サンプル１(&F) || Shift,400  → Shift×2あるいはクリップボード履歴メニュー内で表示
+;    (例) @NoteHotkey=定型文サンプル１(&F) ||    → ホットキーを用いずクリップボード履歴メニュー内で表示
+;【ホットキー名】
+;  ・ホットキー名の部分を『STARTUP』とすると、アプリ起動時に実行
+;  ・ホットキー名の部分を『TASKTRAY』とすると、タスクトレイアイコンのダブルクリック時に実行（デフォルトでは設定画面の表示）
+;【アプリの実行ファイル名】
+;  ・使用中のアプリに応じて定型文メニューを切り替えたい場合に使用
+;  ・アプリのファイル名を指定
+;    (例) @NoteHotkey=f1,,chrome.exe  → Google Chrome 上で F1 キーを押した時
+;---------------------------------------------------------------------
+;【コマンド文】
+;  書式：『項目名 || <①入力テキスト,②選択範囲,③出力方法> || コマンド１ | パラメタ || コマンド２ | パラメタ | パラメタ..』
+;  書式：『項目名 || コマンド１ | パラメタ || コマンド２ | パラメタ | パラメタ..』
+;  書式：『項目名 | 使用するテキスト | コマンド１ | パラメタ || コマンド２ | パラメタ | パラメタ..』
+;  書式：『項目名 | 使用するテキスト | <,②選択範囲,③出力方法> || コマンド１ | パラメタ || コマンド２ | パラメタ | パラメタ..』
+;
+;  ・『||』で複数のコマンドを連続して記述すると、コマンド１ → コマンド２ → コマンド３ ... とパイプ処理が行えます。
+;  ・<#clip,#line,#run> 等のようにフラグを指定することで処理内容を変更することができます。
+;
+;  [フラグ]
+;    ①入力テキスト （直前に「使用するテキスト」がある場合、ここでの指定は無視されます）
+;      #cut    ：選択文字列を切り取って使用する
+;      #copy    ：選択文字列をコピーして使用する
+;      #clip    ：現在のクリップボードの文字列を使用する
+;      #input    ：入力画面を表示する
+;      #blank    ：空文字を使用する
+;      未指定    ：コマンドのデフォルト設定を使用する
+;    ②選択範囲
+;      #all    ：全て選択してから処理を行う
+;      #line    ：現在の行を選択してから処理を行う
+;      未指定    ：現在の選択範囲のまま処理を行う
+;    ③出力方法 （Shiftキーを押しながら実行した場合、ここでの指定を無視して常にクリップボードに送ります）
+;      #paste    ：結果をカーソル位置に貼り付ける
+;      #clip    ：結果をクリップボードに入れる
+;      #run    ：結果をファイルパスやURLと見なして実行する
+;      #msgbox    ：結果をメッセージボックスで表示する
+;      #none    ：結果をレポートしない
+;      未指定    ：コマンドのデフォルト設定を使用する
+;=====================================================================
+
+-
++高度な使い方のサンプル(&N)
+  ReadMe.txtを開く(&A)     | ReadMe.txt | <,,#run>
+  URLを開く(&B)            | http://blank-note.sakura.ne.jp/ | <,,#run>
+  -
+  プロファイル切り替え-Config.txt(&C)      | ClipboardHistory_x64.exe /Profile "Config.txt" | <,,#run>
+  プロファイル切り替え-ConfigB.txt(&D)     | ClipboardHistory_x64.exe /Profile "ConfigB.txt" | <,,#run>
+  -
+  20文字以上のクリップボード履歴を検索して20桁に整形して貼り付け(&E)... | .{20,} | OpenManager || FormatLine | 20
+  クリップボード履歴メニューから選んで引用記号を付けて貼り付け(&F)...   || OpenHistory || RegExReplace | m)^ | > `
+  -
+  カーソル行の行頭を●でマーク(&G)      || <,#line> || RegExReplace | ^[○●]`|^ | ●
+  カーソル行の行頭を○でマーク(&H)      || <,#line> || RegExReplace | ^[○●]`|^ | ○
+  -
+  ファイルを読み込んで20桁に整形して貼り付け(&I)    || PasteFile || FormatLine | 20 | ,,,.,、,。,，,．,？,！,）,」,』,!,),?,\,]
+  5-10番目の履歴からURLを削除してファイルに保存(&J)  || ExportHistory | `r`n-----------`r`n | 5-10 || RegExReplace | http(s)?://([\w-]+\.)+[\w-]+(/[\w- ./?%&=]*)? | ~BLANK || AppendFile | ~BLANK | ~BLANK | ~BLANK | UTF-8 | delete
+  カーソル行を式と見なして計算し答えに置き換える(&K)  || <#cut,#line,#paste> || Calc
+  時分秒を足した数をクリップボードに送る(&L)    | HH+mm+ss | <,,#clip> || Date | L0x0409 || Calc
+  計算式を入力して答えを貼り付ける(&M)...      || <#input,,#paste> || Calc
+  現在時刻を全角で表示(&N)        | yyyy年M月d日ddd曜日`r`nttH時m分s秒 | <,,#msgbox> || Date || DoubleStr
+  文章中の全文字数から原稿料を計算(&O)      || <#copy,#all,#msgbox> || RegExReplace | `n`|`r | ~BLANK || StrLen || RegExReplace | $ | *5 || Calc || RegExReplace | $ | 円
+  クリップボードの内容をプレーンテキストとして貼り付け(&P)|| <#clip,,#paste>
+  -
+  ■各行を逆順にして配列形式に変換(&Q)      || <#cut,,#paste> || SplitCopy | ~NULL | ~NULL | R
+  ■選択範囲を文字種変換しつつ途中経過もペースト(&R)  || KataStr || PasteStr || HiraStr || PasteStr || DoubleStr
+  ■選択範囲を標準出力に送る(&S)        || AppendFile | ~BLANK | `r`n | *
+..
+
+
+;;※定型文サンプル２（Ctrl+Mあるいはクリップボード履歴で表示）
+;;　別のホットキーを指定した @NoteHotkey を追加することで複数の定型文メニューを使い分けられます
+;@NoteHotkey=メールアドレス(&M)||^m
+;xxx@xx.xxx.or.jp
+;yyy@xx.xxx.or.jp
+
+;;※定型文サンプル３（エクスプローラー上でShift*2を押した時は別のメニューを表示）
+;;　使用中のアプリに応じて定型文メニューを切り替えて使うことが出来ます
+;@NoteHotkey=Shift,400,explorer.exe
+;エクスプローラー上で実行
+;〒123-4567 ＯＯＯ県ＯＯＯ市ＯＯＯ町ＯＯＯ
+
+;;※定型文サンプル４（クリップボード履歴で表示）
+;;　末尾を『||』としてホットキーを指定しない場合、定型文メニューをクリップボード履歴メニュー内に追加できます
+;@NoteHotkey=URL(&I)||
+;http://www.xxx.co.jp/
+;http://www.yyy.co.jp/
+
+;;※定型文サンプル５（タスクトレイのダブルクリックでメニューを表示）
+;@NoteHotkey=TASKTRAY
+;クリップボードマネージャー(&S)  || OpenManager
+;-
+;設定(&O)      || OpenConfig
+;再読み込み(&R)      || Reload
+;-
+;終了(&X)      || Exit
+
+
+;========================コマンドの直接実行===========================
+;@DirectHotkey=【ホットキー名】,【ダブルプッシュの反応時間ms】,【アプリの実行ファイル名】
+;---------------------------------------------------------------------
+;  ・ポップアップメニューを表示せず、直下のコマンド群（『【表示名】|』から始まる行）を連続して実行
+;  ・【ダブルプッシュの反応時間ms】【アプリの実行ファイル名】は省略可能
+;  ・実行順序は【表示名】の昇順
+;=====================================================================
+
+;@DirectHotkey=RCtrl,400
+;【サンプル：右Ctrl×２でクリップボードマネージャーを開く】 || OpenManager
+
+;@DirectHotkey=STARTUP
+;【サンプル：アプリ起動時にクリップボードマネージャーを開く】 || OpenManager
+
+;@DirectHotkey=TASKTRAY
+;【サンプル：タスクトレイアイコンのダブルクリックでクリップボードマネージャーを開く】 || OpenManager
+
+;@DirectHotkey=f1,,notepad.exe
+;【サンプル：メモ帳上でF1キーを押したら文字列を貼り付け】 | これはメモ帳です
+
+
+;=====================================================================
+;※以下基本設定※
+;　@SaveFile             =【クリップボード履歴を保存するファイル】
+;　@MaxHistoryCount      =【クリップボード履歴の個数（0-10000）】
+;　@MaxHistoryLength     =【クリップボード履歴一つあたりの最大文字数（0-1000000）】
+;　@HistoryHotkey        =【クリップボード履歴を表示するホットキー名】,【ダブルプッシュの反応時間ms】,【アプリの実行ファイル名】
+;　@SimpleHistory        =【クリップボード履歴メニューをシンプルモードで表示するかどうか】
+;　@SimplePreview        =【ツールチップによるプレビューを表示するかどうか（シンプルモード時はTabキーでOn/Off可）】
+;　@FifoHotkey           =【FIFOペーストを実行するホットキー名】
+;　@DirectModKey         =【ダイレクトペースト時に使用する修飾キー】
+;　@EnableAccessKey      =【メニューでアクセスキーを有効にするかどうか】
+;　@KeepOrderHistory     =【クリップボード履歴を常に記録順に並べるかどうか】
+;　@CompactHistoryOnExit =【終了時に行うクリップボード履歴整理の内容（履歴数,最大文字数,重複削除の有無）】
+;　@ManagerDontAutoHide  =【クリップボードマネージャーを項目実行後に自動的に閉じずに残しておくどうか】
+;　@ManagerAlwaysOnTop   =【クリップボードマネージャーを常に手前に表示するかどうか】
+;　@ManagerPreview       =【クリップボードマネージャーでプレビューパネルを表示するかどうか】
+;　@RecordOnManager      =【クリップボードマネージャーが非表示の時に自動的に履歴の更新をサスペンドするかどうか】
+;=====================================================================
+@SaveFile=ClipboardHistory.dat
+@MaxHistoryCount=500
+@MaxHistoryLength=16382
+@HistoryHotkey=Ctrl,360
+@SimpleHistory=0
+@SimplePreview=1
+@FifoHotkey=^v
+@DirectModKey=,0,0,,
+@EnableAccessKey=1
+@KeepOrderHistory=0,1,0,1
+@CompactHistoryOnExit=
+@ManagerDontAutoHide=0
+@ManagerAlwaysOnTop=1
+@ManagerPreview=1
+@RecordOnManager=0
+
+@CloseMenuByHotkey=1
+@SearchMode=0
+@DirectHotkey=
+||OpenManager
+@ExcludeEXE=
+@ExitFifoPaste=0,1
+@KeepAfterPaste=1,0
+@ManagerClearResult=1
+@ManagerFollowCursor=1
+@ManagerHideNumber=0
+@ManagerSize=350,405,50,0
+@ManagerTree=1,1,1,1
+@MenuLength=47
+@PasteMethod=^{v}
+@PreviewSize=
+@RecordMethod=0
+@RecordPath=1
+@StartRecord=1
+@SwapIcon=0
+@SwapShift=0
+@EncryptSaveFile=0
+@FollowCursor=1
+@ManagerColor=
+@ManagerHideGrid=0
+@ManagerHideSearch=0
+@DirectHotkey=
