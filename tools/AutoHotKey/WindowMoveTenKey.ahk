@@ -1,34 +1,42 @@
-﻿#Include GetMonitorCount.ahk
-#Include WindowSizeChange.ahk
+﻿; 公式: https://ankscript.github.io/ja/docs/v2/index.htm
+; 非公式日本語: http://ahkwiki.net/Top
+
+#Include "GetMonitorNumber.ahk"
+#Include "WindowSizeChange.ahk"
 
 ;===============================================================================
 ; functions
 ;===============================================================================
-; アクティブウィンドウの移動
-WinMoveG9(mntIdx = 0, moveArea = 7) {
-  ; mntIdx : 異動先となるモニタ。デフォルトは0(移動しない)。
-  ; moveArea : 移動先となるグリッド(位置はテンキー参照。デフォルトは7(左上)。
-  WinGet, winId, ID, A
-  WinGet, procNm, ProcessName, A
-
-  WinRestore, ahk_id %winId%
-  WinActivate, ahk_id %winId%
-
-  WinGetPos, winX, winY, winW, winH, ahk_id %winId%
-  if mntIdx {
-    SysGet, mnt, MonitorWorkArea, %mntIdx%
-; MsgBox, mntIdx: %mntIdx%`n mntT: %mntTop%`n mntB: %mntBottom%`n mntL: %mntLeft%`n mntR: %mntRight%
+; アクティブウィンドウ次(前)に移動
+MoveMonitor(next := true) {
+  WinId := WinGetID("A")
+  monitors := GetMonitors()
+  monNum := GetMonitorNumber(WinId, monitors)
+  if (next) {
+    monNum := monNum + 1
+    if (monNum > monitors.Length)
+      monNum := 1
   } else {
-    winXC := winX + winW // 2
-    winYC := winY + winH // 2
-    mntCnt := GetMonitorCount()
-    loop, %mntCnt% {
-      SysGet, mnt, MonitorWorkArea, %A_Index%
-      if (mntTop < winYC) && (winYC < mntBottom) && (mntLeft < winXC) && (winXC < mntRight) {
-        break
-      }
-    }
+    monNum := monNum - 1
+    if (monNum < 1)
+      monNum := monitors.Length
   }
+  MoveActiveWindow(WinId, monNum)
+}
+
+; アクティブウィンドウの移動
+WinMoveCorner(posiV := "center", posiH := "center") {
+  winId := WinGetID("A")
+  monitors := GetMonitors()
+  monNum := GetMonitorNumber(WinId, monitors)
+  MoveActiveWindow(winId, monNum, posiV, posiH)
+}
+
+; アクティブウィンドウの移動 & サイズ調整
+MoveActiveWindow(WinId, monNum, posiV := "center", posiH := "center") {
+  WinRestore("ahk_id " winId)
+  WinGetPos(&winX, &winY, &winW, &winH, "ahk_id " winId)
+  MonitorGetWorkArea(monNum, &mntLeft, &mntTop, &mntRight, &mntBottom)
 
   mntSizeX := Ceil((mntRight - mntLeft) * 0.95)
   if (winW > mntSizeX) {
@@ -39,26 +47,23 @@ WinMoveG9(mntIdx = 0, moveArea = 7) {
     winH := mntSizeY
   }
 
-  if (moveArea == 1 || moveArea == 4 || moveArea == 7)
+  if (posiH == "left")
     moveX := mntLeft
-  else if (moveArea == 2 || moveArea == 5 || moveArea == 8)
+  else if (posiH == "center")
     moveX := (mntSizeX - winW) / 2 + mntLeft
-  else ; if (moveArea == 3 || moveArea == 6 || moveArea == 9)
+  else ; if (posiH == "right")
     moveX := mntRight - winW
   moveX := Round(moveX)
 
-  if (moveArea == 7 || moveArea == 8 || moveArea == 9)
+  if (posiV == "top")
     moveY := mntTop
-  else if (moveArea == 4 || moveArea == 5 || moveArea == 6)
+  else if (posiV == "center")
     moveY := (mntSizeY - winH) / 2 + mntTop
-  else ; if (moveArea == 1 || moveArea == 2 || moveArea == 3)
+  else ; if (posiV == "bottom")
     moveY := mntBottom - winH
- moveY := Round(moveY)
+  moveY := Round(moveY)
 
-  ; WinMove, ahk_id %winId%, , %moveX%, %moveY%, %winW%, %winH%
-  WinMove, ahk_id %winId%, , %moveX%, %moveY%
-  WinMove, ahk_id %winId%, , , , %winW%, %winH%
-; MsgBox, mntIdx: %mntIdx%`n mntT: %mntTop%`n mntB: %mntBottom%`n mntL: %mntLeft%`n mntR: %mntRight%`n`nwinId: %winId% - %procNm%`n moveX: %moveX%`n winW: %winW%`n moveY: %moveY%`n winH: %winH%
+  WinMove(moveX, moveY, , , winId)
 }
 
 ;===============================================================================
@@ -69,24 +74,19 @@ WinMoveG9(mntIdx = 0, moveArea = 7) {
 ;   + Shift
 ;   & 同時押し(例:Numpad0 & Numpad1)
 ;===============================================================================
-; PCモニター Win + Ten Key
-#Numpad1::WinMoveG9(1, 1) return
-#Numpad2::WinMoveG9(1, 2) return
-#Numpad3::WinMoveG9(1, 3) return
-#Numpad4::WinMoveG9(1, 4) return
-#Numpad5::WinMoveG9(1, 5) return
-#Numpad6::WinMoveG9(1, 6) return
-#Numpad7::WinMoveG9(1, 7) return
-#Numpad8::WinMoveG9(1, 8) return
-#Numpad9::WinMoveG9(1, 9) return
+; 前のモニターに移動 : Win + Alt + NumpadDiv(/)
+#!NumpadDiv:: MoveMonitor(false)
 
-; 拡張モニター Win + Alt + Ten Key
-#!Numpad1::WinMoveG9(2, 1) return
-#!Numpad2::WinMoveG9(2, 2) return
-#!Numpad3::WinMoveG9(2, 3) return
-#!Numpad4::WinMoveG9(2, 4) return
-#!Numpad5::WinMoveG9(2, 5) return
-#!Numpad6::WinMoveG9(2, 6) return
-#!Numpad7::WinMoveG9(2, 7) return
-#!Numpad8::WinMoveG9(2, 8) return
-#!Numpad9::WinMoveG9(2, 9) return
+; 次のモニターに移動 : Win + Alt + NumpadMult(*)
+#!NumpadMult:: MoveMonitor(true)
+
+; モニター移動 : Win + Alt + Ten Key
+#!Numpad1::WinMoveCorner("bottom", "left")
+#!Numpad2::WinMoveCorner("bottom", "center")
+#!Numpad3::WinMoveCorner("bottom", "right")
+#!Numpad4::WinMoveCorner("center", "left")
+#!Numpad5::WinMoveCorner("center", "center")
+#!Numpad6::WinMoveCorner("center", "right")
+#!Numpad7::WinMoveCorner("top", "left")
+#!Numpad8::WinMoveCorner("top", "center")
+#!Numpad9::WinMoveCorner("top", "right")
