@@ -1,23 +1,41 @@
 {
+  "editor.acceptSuggestionOnEnter": "off",
   "editor.autoClosingBrackets": "beforeWhitespace",
+  "editor.autoClosingQuotes": "never",
   "editor.autoIndent": "keep",
-  "editor.fontFamily": "'MyricaM M', 'MSゴシック'",
-  "editor.fontSize": 14,
+  "editor.bracketPairColorization.enabled": true,
+  "editor.codeActionsOnSave": {
+    "source.fixAll": "always"
+  },
+  "editor.copyWithSyntaxHighlighting": false,
+  "editor.cursorBlinking": "smooth",
+  "editor.cursorStyle": "block-outline",
+  "editor.cursorSmoothCaretAnimation": "on",
   "editor.detectIndentation": false,
-  "editor.renderWhitespace": "boundary",
-  "editor.renderControlCharacters": true,
-  "editor.renderIndentGuides": true,
-  "editor.rulers": [
-    80,
-    100
-  ],
-  "editor.tabSize": 2,
+  "editor.fontFamily": "BIZUDPゴシック, PlemolJP, 'MyricaM M', 'MSゴシック'",
+  "editor.fontSize": 14,
+  "editor.guides.bracketPairs": false,
+  "editor.guides.indentation": false,
+  "editor.inlayHints.enabled": "off",
+  "editor.largeFileOptimizations": false,
   "editor.minimap.enabled": false, // あんまり便利じゃない
   "editor.minimap.maxColumn": 120,
   "editor.quickSuggestionsDelay": 500,
+  "editor.renderWhitespace": "boundary",
+  "editor.renderControlCharacters": true,
+  "editor.rulers": [
+    80,
+    100,
+    120
+  ],
   "editor.suggestSelection": "first",
+  "editor.tabSize": 2,
+  "editor.wordWrap": "off",
   "extensions.ignoreRecommendations": true,
   // "files.autoGuessEncoding": true,
+  "files.associations": {
+    "*.mdx": "markdown"
+  },
   "files.exclude": {
     // "**/.vscode": true,
     "**/.git": true,
@@ -35,35 +53,86 @@
     "**/node_modules/**/*": true,
     "**/jquery*.js": true
   },
-  "terminal.integrated.shell.windows": "C:\\Program Files\\Git\\bin\\bash.exe", // 端末 = git bush
+  "javascript.format.enable": true,
+  "javascript.inlayHints.functionLikeReturnTypes.enabled": true,
+  "javascript.inlayHints.parameterNames.enabled": "literals",
+  "javascript.inlayHints.enumMemberValues.enabled": true,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "javascript.validate.enable": true,
+  "terminal.integrated.defaultProfile.windows": "Git Bash",
+  "terminal.integrated.profiles.windows": {
+    "GitBash": {
+      "source": "GitBash",
+      "path": [
+        "${process.env['ProgramFiles']}\\Git\\bin\\bash.exe",
+        "${process.env['LocalAppData']}\\Programs\\Git\\bin\\bash.exe"
+      ],
+    },
+    "PowerShell": {
+      "source": "PowerShell",
+      "icon": "terminal-powershell"
+    },
+    "Command Prompt": {
+      "path": [
+        "${env:windir}\\Sysnative\\cmd.exe",
+        "${env:windir}\\System32\\cmd.exe"
+      ],
+      "args": [],
+      "icon": "terminal-cmd"
+    },
+  },
   "window.title": "${rootName}${separator}${dirty}${activeEditorLong}",
-  "window.zoomLevel": 0,
+  "window.zoomLevel": 1,
   "workbench.editor.enablePreviewFromQuickOpen": false,
-  "workbench.colorTheme": "Visual Studio 2019 Dark",
   "workbench.startupEditor": "newUntitledFile",
 
   // 拡張機能 ------------------------------------------------------------------
+  // Blockman
+  "blockman.n04ColorComboPreset": "Classic Dark 1 (Super gradients)",
+
   // Git
+  "git.autofetch": true,
   "git.confirmSync": false,
 
-  // PlantUML
-  // Alternate plantuml.jar location. Leave it blank to use integrated jar.
-  // "plantuml.jar": "C:\\Apps\\PlantUML\\plantuml.jar",
-  // "plantuml.exportFormat": "png",
+  // Code Runner
+  "code-runner.clearPreviousOutput": true,
+  "code-runner.executorMap": {
+    "nim": "nim compile --verbosity:0 --hints:off --out:output/ --run",
+  },
+
+  // Draw.io
+  "hediet.vscode-drawio.customFonts": ["BIZUDPゴシック"],
+  "hediet.vscode-drawio.local-storage": "eyIuZHJhd2lvLWNvbmZpZyI6IntcImxhbmd1YWdlXCI6XCJcIixcImN1c3RvbUZvbnRzXCI6W10sXCJsaWJyYXJpZXNcIjpcImdlbmVyYWw7Z2NwMlwiLFwiY3VzdG9tTGlicmFyaWVzXCI6W1wiTC5zY3JhdGNocGFkXCJdLFwicGx1Z2luc1wiOltdLFwicmVjZW50Q29sb3JzXCI6W10sXCJmb3JtYXRXaWR0aFwiOlwiMjQwXCIsXCJjcmVhdGVUYXJnZXRcIjpmYWxzZSxcInBhZ2VGb3JtYXRcIjp7XCJ4XCI6MCxcInlcIjowLFwid2lkdGhcIjo4MjcsXCJoZWlnaHRcIjoxMTY5fSxcInNlYXJjaFwiOnRydWUsXCJzaG93U3RhcnRTY3JlZW5cIjp0cnVlLFwiZ3JpZENvbG9yXCI6XCIjZDBkMGQwXCIsXCJkYXJrR3JpZENvbG9yXCI6XCIjNmU2ZTZlXCIsXCJhdXRvc2F2ZVwiOnRydWUsXCJyZXNpemVJbWFnZXNcIjpudWxsLFwib3BlbkNvdW50ZXJcIjowLFwidmVyc2lvblwiOjE4LFwidW5pdFwiOjEsXCJpc1J1bGVyT25cIjpmYWxzZSxcInVpXCI6XCJcIn0ifQ==",
+  "hediet.vscode-drawio.resizeImages": null,
+
+  // Git
+  "git.openRepositoryInParentFolders": "never",
 
   // Markdown All in One
   "markdown.extension.list.indentationSize": "inherit",
   "markdown.extension.orderedList.marker": "one",
+  "markdown.extension.print.includeVscodeStylesheets": false,
 
   // Markdown Preview Enhanced
   // https://github.com/shd101wyy/vscode-markdown-preview-enhanced/blob/master/package.json
   // "markdown-preview-enhanced.previewTheme": "atom-material.css",
+  "markdown-preview-enhanced.previewTheme": "github-dark.css",
   // "markdown-preview-enhanced.previewTheme": "newsprint.css",
   // "markdown-preview-enhanced.revealjsTheme": "beige.css",
   // "markdown-preview-enhanced.revealjsTheme": "moon.css",
   // "markdown-preview-enhanced.revealjsTheme": "sky.css",
   // "markdown-preview-enhanced.previewTheme": "one-dark.css",
   "markdown-preview-enhanced.revealjsTheme": "white.css",
+  "markdown-preview-enhanced.plantumlJarPath": "%userprofile%\\documents\\plantuml-1.2023.13.jar",
+
+  // PlantUML
+  // Alternate plantuml.jar location. Leave it blank to use integrated jar.
+  // "plantuml.jar": "C:\\Apps\\PlantUML\\plantuml.jar",
+  "plantuml.exportFormat": "svg",
+  "plantuml.render": "PlantUMLServer",
+  "plantuml.server": "https://www.plantuml.com/plantuml",
+
+  "vsintellicode.modify.editor.suggestSelection": "automaticallyOverrodeDefaultValue",
 
   // 言語識別子 ----------------------------------------------------------------
   // 1.参考
@@ -77,7 +146,7 @@
     },
     "editor.tabSize": 2
   },
-  "[markdown]": {
+  "[markdown,mdx]": {
     "editor.insertSpaces": true,
     "editor.tabSize": 4,
     "files.trimTrailingWhitespace": false,
@@ -93,8 +162,13 @@
     "editor.insertSpaces": false,
     "editor.tabSize": 4
   },
-  "git.autofetch": true,
   "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[vue]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "yzhang.markdown-all-in-one"
   },
 }
