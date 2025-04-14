@@ -32,8 +32,33 @@
 +text list(&a)
   &m メール  | personal@abc.mn
   -
-  &l GitLabパスフレーズ | aaaa
-  &h GitHubパスフレーズ | bbbb
+  +よく使うコマンド(&c)
+    &1 pnpm-lock.yaml削除 | rm pnpm-lock.yaml && rm -rf node_modules/ && pnpm store prune
+    &e wsl - projects | \\wsl.localhost\Ubuntu\home\aaa\projects
+    &s 臨時ssh | ssh -i .vagrant/machines/default/virtualbox/private_key -p 2223 vagrant@127.0.0.1
+  ..
+  -
+  +WSL(&w)
+    ; .ssh/config、.bashrc 参照
+    &1 アカウント切り替え aaa | ssh -T github-aaa && gitf
+    &2 アカウント切り替え bbb | ssh -T github-bbb && gitp
+    &a apt-get update | clear && sudo apt-get update && sudo apt-get upgrade -y
+    &h history | history `| grep $0
+    ; 表示された番号で実行するには`!番号`で
+    &g git更新 | clear && sudo add-apt-repository ppa:git-core/ppa && sudo apt update && sudo apt install git && git --version
+    &p pnpm更新 | clear && corepack install -g pnpm@10.5.2
+    &n npm publish | npm login && npm publish
+    &n node install | curl -fsSL https://deb.nodesource.com/setup_lts.x `| sudo -E bash -
+    &r repositoryの新規追加 | git config --global --add safe.directory "//wsl.localhost/Ubuntu/home/aaa/projects/$0"
+  ..
+  -
+  +Powershell(&p)
+    &1 which | gcm $0 `| fl
+    &2 pnpm更新 | iwr https://get.pnpm.io/install.ps1 -useb `| iex
+  ..
+  -
+  +VS Code(&v)
+    &j jsのみ  | **/resources/assets/**/*.js
   ..
   -
   +JavaScript(&j)

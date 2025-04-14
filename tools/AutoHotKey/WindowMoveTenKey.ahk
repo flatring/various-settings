@@ -63,7 +63,13 @@ MoveActiveWindow(WinId, monNum, posiV := "center", posiH := "center") {
     moveY := mntBottom - winH
   moveY := Round(moveY)
 
-  WinMove(moveX, moveY, , , winId)
+  ; ウィンドウがモニター範囲外に出ないように調整
+  if (moveX + winW > mntRight)
+    moveX := mntRight - winW
+  if (moveY + winH > mntBottom)
+    moveY := mntBottom - winH
+
+  WinMove(moveX, moveY, winW, winH, "ahk_id " winId)
 }
 
 ;===============================================================================
@@ -80,7 +86,7 @@ MoveActiveWindow(WinId, monNum, posiV := "center", posiH := "center") {
 ; 次のモニターに移動 : Win + Alt + NumpadMult(*)
 #!NumpadMult:: MoveMonitor(true)
 
-; モニター移動 : Win + Alt + Ten Key
+; モニター隅へ移動 : Win + Alt + Ten Key
 #!Numpad1::WinMoveCorner("bottom", "left")
 #!Numpad2::WinMoveCorner("bottom", "center")
 #!Numpad3::WinMoveCorner("bottom", "right")
