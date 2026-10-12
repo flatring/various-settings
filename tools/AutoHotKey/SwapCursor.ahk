@@ -1,22 +1,33 @@
-﻿#Include GetMonitorCount.ahk
+#Include "GetMonitors.ahk"
+
+; NumLock キーはカーソルスワップに使うため、テンキーは常に数字扱いに固定する
+SetNumLockState("AlwaysOn")
 
 ;===============================================================================
 ; functions
 ;===============================================================================
 ; マウスカーソルのあるモニター番号を返す
 GetCursorOnActiveMonitor() {
-  CoordMode, Mouse, Screen
-  MouseGetPos, curX, curY
-; MsgBox, curX:`t%curX%`ncurY:`t%curY%
-  mntNum := GetMonitorCount()
-  loop, %mntNum% {
-    SysGet, mnt, Monitor, %A_Index%
-; MsgBox, mntTop:`t%mntTop%`nmntBottom:`t%mntBottom%
-; MsgBox, mntLeft:`t%mntLeft%`nmntRight:`t%mntRight%
-    if (mntTop < curY) && (curY < mntBottom) && (mntLeft < curX) && (curX < mntRight) {
-      return A_Index
-    }
+  CoordMode("Mouse", "Screen")
+  MouseGetPos(&curX, &curY)
+  For mon in GetMonitors() {
+    ; 右端・下端は半開区間で扱い、モニタ境界上での二重マッチを防ぐ
+    if (curX >= mon.left and curX < mon.right and curY >= mon.top and curY < mon.bottom)
+      return mon.id
   }
+  return 1
+}
+
+; マウスカーソルを次のディスプレイの中央へ移動
+SwapCursor() {
+  monitors := GetMonitors()
+  mntId := GetCursorOnActiveMonitor() + 1
+  if (mntId > monitors.Length)
+    mntId := 1
+  MonitorGetWorkArea(mntId, &mntLeft, &mntTop, &mntRight, &mntBottom)
+  MouseMove(mntLeft + (mntRight - mntLeft) // 2, mntTop + (mntBottom - mntTop) // 2)
+  ; 軌跡も無く瞬時に移動したい場合はWindowsAPIを使用
+  ; DllCall("SetCursorPos", "Int", x, "Int", y)
 }
 
 ;===============================================================================
@@ -27,18 +38,5 @@ GetCursorOnActiveMonitor() {
 ;   + Shift
 ;   & 同時押し(例:Numpad0 & Numpad1)
 ;===============================================================================
-; Ctrl + Q : マウスカーソルをディスプレイ間でスワップ
-^q::
-  mntCnt := GetMonitorCount()
-  actMntId := GetCursorOnActiveMonitor()
-  ; mntId := actMntId + 1
-  ; if (mntCnt < mntId) {
-  ;   mntId = 1
-  ; }
-  mntId := (mntCnt < ++actMntId) ? 1 : actMntId
-; MsgBox, Monitor Count:`t%mntCnt%`nActive Monitor ID:`t%actMntId%`nMonitor ID:`t%mntId%
-  SysGet, mnt, MonitorWorkArea, %mntId%
-  MouseMove, mntLeft + (mntRight - mntLeft) // 2, mntTop + (mntBottom - mntTop) // 2
-  ; 軌跡も無く瞬時に移動したい場合はWindowsAPIを使用
-  ; DllCall("SetCursorPos", UInt,x - A_ScreenWidth, UInt,y)
-  return
+; NumLock : マウスカーソルをディスプレイ間でスワップ
+NumLock:: SwapCursor()

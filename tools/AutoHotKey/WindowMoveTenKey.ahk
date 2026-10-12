@@ -3,6 +3,7 @@
 
 #Include "GetMonitorNumber.ahk"
 #Include "WindowSizeChange.ahk"
+#Include "SwapCursor.ahk"
 
 ;===============================================================================
 ; functions
@@ -33,24 +34,34 @@ WinMoveCorner(posiV := "center", posiH := "center") {
 }
 
 ; アクティブウィンドウの移動 & サイズ調整
-MoveActiveWindow(WinId, monNum, posiV := "center", posiH := "center") {
-  WinRestore("ahk_id " winId)
+MoveActiveWindow(winId, monNum, posiV := "center", posiH := "center") {
+  ; 最大化・最小化時のみ復元し、復元完了(非同期)を待ってから座標を取得する
+  if (WinGetMinMax("ahk_id " winId) != 0) {
+    WinRestore("ahk_id " winId)
+    deadline := A_TickCount + 500
+    while (WinGetMinMax("ahk_id " winId) != 0 and A_TickCount < deadline)
+      Sleep(10)
+  }
   WinGetPos(&winX, &winY, &winW, &winH, "ahk_id " winId)
   MonitorGetWorkArea(monNum, &mntLeft, &mntTop, &mntRight, &mntBottom)
 
-  mntSizeX := Ceil((mntRight - mntLeft) * 0.95)
-  if (winW > mntSizeX) {
-    winW := mntSizeX
+  mntW := mntRight - mntLeft
+  mntH := mntBottom - mntTop
+
+  ; 作業領域の95%を上限にサイズを制限
+  maxW := Ceil(mntW * 0.95)
+  if (winW > maxW) {
+    winW := maxW
   }
-  mntSizeY := Ceil((mntBottom - mntTop) * 0.95)
-  if (winH > mntSizeY) {
-    winH := mntSizeY
+  maxH := Ceil(mntH * 0.95)
+  if (winH > maxH) {
+    winH := maxH
   }
 
   if (posiH == "left")
     moveX := mntLeft
   else if (posiH == "center")
-    moveX := (mntSizeX - winW) / 2 + mntLeft
+    moveX := (mntW - winW) / 2 + mntLeft
   else ; if (posiH == "right")
     moveX := mntRight - winW
   moveX := Round(moveX)
@@ -58,17 +69,12 @@ MoveActiveWindow(WinId, monNum, posiV := "center", posiH := "center") {
   if (posiV == "top")
     moveY := mntTop
   else if (posiV == "center")
-    moveY := (mntSizeY - winH) / 2 + mntTop
+    moveY := (mntH - winH) / 2 + mntTop
   else ; if (posiV == "bottom")
     moveY := mntBottom - winH
   moveY := Round(moveY)
 
-  ; ウィンドウがモニター範囲外に出ないように調整
-  if (moveX + winW > mntRight)
-    moveX := mntRight - winW
-  if (moveY + winH > mntBottom)
-    moveY := mntBottom - winH
-
+  ; 制限後のサイズも同時に適用する
   WinMove(moveX, moveY, winW, winH, "ahk_id " winId)
 }
 
@@ -86,7 +92,14 @@ MoveActiveWindow(WinId, monNum, posiV := "center", posiH := "center") {
 ; 次のモニターに移動 : Win + Alt + NumpadMult(*)
 #!NumpadMult:: MoveMonitor(true)
 
-; モニター隅へ移動 : Win + Alt + Ten Key
+; 前(次)のモニターに移動 : Win + Shift + ←(→)
+;   Windows標準の Win+Shift+←/→ を上書き。移動時に最大化を解除し、
+;   作業領域の95%を超えるサイズは縮めて中央に配置する(=リサイズを伴う)
+;   ※ Win+Shift+↑/↓ は上書きしていない(Windows標準: 高さを画面いっぱいに伸ばす/戻す)
+#+Left:: MoveMonitor(false)
+#+Right:: MoveMonitor(true)
+
+; モニター内の位置へ移動 : Win + Alt + Ten Key (テンキーの配置 = 画面の9分割位置)
 #!Numpad1::WinMoveCorner("bottom", "left")
 #!Numpad2::WinMoveCorner("bottom", "center")
 #!Numpad3::WinMoveCorner("bottom", "right")
