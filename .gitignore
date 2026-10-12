@@ -1,3 +1,6 @@
 # ClipboardHistory: 本体・履歴データ(.dat)などは管理しない。設定ファイルのみ git 管理
 tools/ClipboardHistory/*
 !tools/ClipboardHistory/Config.txt
+
+# Google日本語入力: 人名の辞書は個人情報のため管理しない
+tools/Google日本語入力/google日本語入力-ユーザー辞書-人名.txt
