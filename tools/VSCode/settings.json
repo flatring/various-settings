@@ -14,7 +14,7 @@
   "editor.cursorSmoothCaretAnimation": "on",
   "editor.detectIndentation": false,
   "editor.fontFamily": "BIZUDPゴシック, PlemolJP, 'MyricaM M', 'MSゴシック'",
-  "editor.fontSize": 14,
+  "editor.fontSize": 12,
   "editor.guides.bracketPairs": false,
   "editor.guides.indentation": false,
   "editor.inlayHints.enabled": "off",
@@ -47,12 +47,9 @@
   "files.insertFinalNewline": true,  // ファイル末尾に改行を追加
   "files.trimFinalNewlines": true,   // 末尾の余分な改行を削除
   "files.trimTrailingWhitespace": true, // 行末の空白を削除
-  "javascript.format.enable": true,
-  "javascript.inlayHints.functionLikeReturnTypes.enabled": true,
-  "javascript.inlayHints.parameterNames.enabled": "literals",
-  "javascript.inlayHints.enumMemberValues.enabled": true,
-  "javascript.updateImportsOnFileMove.enabled": "always",
-  "javascript.validate.enable": true,
+  "js/ts.inlayHints.functionLikeReturnTypes.enabled": true,
+  "js/ts.inlayHints.parameterNames.enabled": "literals",
+  "js/ts.updateImportsOnFileMove.enabled": "always",
   "json.schemaDownload.trustedDomains": {
     "https://schemastore.azurewebsites.net/": true,
     "https://raw.githubusercontent.com/microsoft/vscode/": true,
@@ -166,19 +163,7 @@
     "files.trimTrailingWhitespace": false,
     "editor.defaultFormatter": "yzhang.markdown-all-in-one"
   },
-  "[html]": {},
-  "[javascript]": {
-    "editor.defaultFormatter": "vscode.typescript-language-features"
-  },
-  "[jade]": { // Pug
-  },
   "[sql]": {
     "editor.tabSize": 4
-  },
-  "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  },
-  "[vue]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
 }
