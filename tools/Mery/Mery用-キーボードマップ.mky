@@ -1,0 +1,674 @@
+﻿[Default]
+; 新規作成
+FileNewAction=Ctrl+N
+; 開く
+FileOpenAction=Ctrl+O
+; 閉じて開く
+FileCloseOpenAction=
+; 上書き保存
+FileSaveAction=Ctrl+S
+; 名前を付けて保存
+FileSaveAsAction=
+; すべて保存
+FileSaveAllAction=
+; 自動保存
+FileAutoSaveAction=
+; エクスプローラーで開く
+FileOpenInExplorerAction=Shift+Alt+R
+; パスのコピー
+FileCopyPathAction=Shift+Alt+C
+; 同じエンコードで読み直し
+FileReload2Action=
+; 自動選択で読み直し
+FileReloadAutoSelectAction=
+; UTF-16LE で読み直し
+FileReloadUTF16LEAction=
+; UTF-16BE で読み直し
+FileReloadUTF16BEAction=
+; UTF-8 で読み直し
+FileReloadUTF8Action=
+; UTF-7 で読み直し
+FileReloadUTF7Action=
+; アラビア語 (Windows 1256) で読み直し
+FileReloadArabicAction=
+; バルト言語 (Windows 1257) で読み直し
+FileReloadBalticAction=
+; 中央ヨーロッパ言語 (Windows 1250) で読み直し
+FileReloadCentralEuropeanAction=
+; 簡体字中国語 (GB18030) で読み直し
+FileReloadGB18030Action=
+; 簡体字中国語 (GB2312) で読み直し
+FileReloadChineseSimplifiedAction=
+; 繁体字中国語 (Big5) で読み直し
+FileReloadChineseTraditionalAction=
+; キリル言語 (Windows 1251) で読み直し
+FileReloadCyrillicAction=
+; ギリシャ語 (Windows 1253) で読み直し
+FileReloadGreekAction=
+; ヘブライ語 (Windows 1255) で読み直し
+FileReloadHebrewAction=
+; 日本語 (EUC) で読み直し
+FileReloadEUCAction=
+; 日本語 (JIS) で読み直し
+FileReloadJISAction=
+; 日本語 (シフト JIS) で読み直し
+FileReloadShiftJISAction=
+; 韓国語 (KS_C_5601-1987) で読み直し
+FileReloadKoreanAction=
+; タイ語 (Windows 874) で読み直し
+FileReloadThaiAction=
+; トルコ語 (Windows 1254) で読み直し
+FileReloadTurkishAction=
+; ベトナム語 (Windows 1258) で読み直し
+FileReloadVietnameseAction=
+; 西ヨーロッパ言語 (Windows 1252) で読み直し
+FileReloadWesternEuropeanAction=
+; CR+LF (Windows) で改行
+FileLineEndingCRLFAction=
+; CR (Macintosh) で改行
+FileLineEndingCRAction=
+; LF (UNIX) で改行
+FileLineEndingLFAction=
+; 印刷
+FilePrintAction=Ctrl+P
+; 印刷プレビュー
+FilePrintPreviewAction=
+; 保存して閉じる
+FileSaveCloseAction=
+; 閉じる
+FileCloseAction=Ctrl+F4,Ctrl+W
+; すべて保存して閉じる (現在のデスクトップのみ)
+FileSaveCloseAllDesktopAction=
+; すべて閉じる (現在のデスクトップのみ)
+FileCloseAllDesktopAction=
+; すべて保存して閉じる
+FileSaveCloseAllAction=Shift+Ctrl+E
+; すべて閉じる
+FileCloseAllAction=Shift+Alt+X
+; 他のタブをすべて閉じる
+FileCloseOthersAction=
+; 左のタブをすべて閉じる
+FileCloseLeftAction=
+; 右のタブをすべて閉じる
+FileCloseRightAction=
+; 最後に閉じたファイルを開く
+FileOpenRecentClosedFileAction=Shift+Ctrl+T
+; 元に戻す
+EditUndoAction=Ctrl+Z
+; やり直し
+EditRedoAction=Ctrl+Y
+; 切り取り
+EditCutAction=Ctrl+X
+; 行切り取り
+EditCutLineAction=
+; コピー
+EditCopyAction=Ctrl+C
+; 引用付きコピー
+EditCopyQuotesAction=Ctrl+Q
+; 行コピー
+EditCopyLineAction=
+; 貼り付け
+EditPasteAction=Ctrl+V
+; 引用付き貼り付け
+EditPasteQuotesAction=Ctrl+B
+; 削除
+EditDeleteAction=Del
+; 1 文字左を削除
+EditDeleteLeftAction=
+; 行削除
+EditDeleteLineAction=Shift+Ctrl+L
+; 行右削除
+EditDeleteRightLineAction=
+; 行左削除
+EditDeleteLeftLineAction=
+; 単語の削除
+EditDeleteWordAction=Shift+Ctrl+Del
+; 単語右削除
+EditDeleteRightWordAction=Ctrl+Del
+; 単語左削除
+EditDeleteLeftWordAction=Ctrl+BkSp
+; すべて選択
+EditSelectAllAction=Ctrl+A
+; 行を選択
+EditSelectLineAction=
+; 単語を選択
+EditSelectWordAction=
+; 選択範囲を行に分ける
+EditSplitSelIntoLinesAction=Ctrl+Alt+L
+; 次の行にカーソルを追加
+EditAddCursorToNextLineAction=
+; 前の行にカーソルを追加
+EditAddCursorToPrevLineAction=
+; 日付と時刻
+EditDateTimeAction=Shift+F5
+; 挿入
+FileInsertAction=
+; GUID の作成
+EditCreateGuidAction=Shift+Ctrl+G
+; 行の 2 重化
+EditDuplicateLineAction=Shift+Ctrl+Y
+; リンクをコピー
+EditCopyLinkAction=
+; リンクを開く
+EditOpenLinkAction=
+; 行へ移動
+EditGoToLineAction=Ctrl+G
+; ファイルへ移動
+EditGoToFileAction=F10
+; 最後に編集した位置へ移動
+EditGoToChangedAction=Shift+Ctrl+Z
+; 次の変更行
+EditNextChangedAction=
+; 前の変更行
+EditPrevChangedAction=
+; IME を開く
+EditToggleImeAction=
+; 書き換え禁止
+EditReadOnlyAction=
+; 改行を挿入
+EditInsertNewLinesAction=F7
+; 改行を削除
+EditRemoveNewLinesAction=Shift+F7
+; 行の分割
+EditSplitLinesAction=
+; 行の結合
+EditJoinLinesAction=
+; 大文字に変換
+EditUpperCaseAction=Shift+Ctrl+U,"Ctrl+K, Ctrl+U"
+; 小文字に変換
+EditLowerCaseAction=Ctrl+L,"Ctrl+K, Ctrl+L"
+; 単語の最初の文字を大文字に変換
+EditCapitalizeAction=
+; 半角に変換
+EditHalfWidthAction=
+; 全角に変換
+EditFullWidthAction=
+; 空白をタブに変換
+EditTabifyAction=
+; タブを空白に変換
+EditUntabifyAction=
+; インデント
+EditIndentAction=
+; 逆インデント
+EditUnindentAction=
+; 再変換
+EditReconvertAction=
+; 文字コードの切り替え
+EditToggleCharacterCodeAction=Alt+X
+; Base64 デコード
+EditBase64DecodeAction=
+; Base64 エンコード
+EditBase64EncodeAction=
+; 挿入/上書の切り替え
+EditInsertAction=Ins
+; ブックマークを設定/解除
+EditToggleBookmarkAction=Ctrl+F2
+; 次のブックマーク
+EditNextBookmarkAction=F2
+; 前のブックマーク
+EditPrevBookmarkAction=Shift+F2
+; ブックマークをクリア
+EditClearBookmarkAction=Shift+Ctrl+F2
+; スペル チェック
+EditToggleSpellAction=
+; すべてのスペル チェック
+EditSpellAllAction=
+; 1 重引用符で囲まれた文字列のスペル チェック
+EditSpellSingleQuotesAction=
+; 2 重引用符で囲まれた文字列のスペル チェック
+EditSpellDoubleQuotesAction=
+; コメントのスペル チェック
+EditSpellCommentsAction=
+; スクリプトのスペル チェック
+EditSpellScriptAction=
+; タグのスペル チェック
+EditSpellTagsAction=
+; 強調文字列のスペル チェック
+EditSpellHighlightAction=
+; ハイパーリンクのスペル チェック
+EditSpellHyperlinkAction=
+; その他のスペル チェック
+EditSpellOtherAction=
+; 次のスペル ミス
+EditNextSpellAction=Ctrl+M
+; 前のスペル ミス
+EditPrevSpellAction=Shift+Ctrl+M
+; 1 文字右へ移動
+EditCharRightAction=
+; 1 文字左へ移動
+EditCharLeftAction=
+; 1 単語右へ移動
+EditWordRightAction=
+; 1 単語左へ移動
+EditWordLeftAction=
+; 1 行上へ移動
+EditLineUpAction=
+; 1 行下へ移動
+EditLineDownAction=
+; 1 ページ上へ移動
+EditPageUpAction=
+; 1 ページ下へ移動
+EditPageDownAction=
+; 行頭へ移動
+EditLineStartAction=
+; 行頭またはテキストの開始位置へ移動
+EditTextStartAction=Home
+; 論理行の行頭へ移動
+EditLogicalLineStartAction=
+; 行末へ移動
+EditLineEndAction=
+; 論理行の行末へ移動
+EditLogicalLineEndAction=
+; 文頭へ移動
+EditDocumentStartAction=
+; 文末へ移動
+EditDocumentEndAction=
+; 対応する括弧へ移動
+EditGoToBracketAction=Ctrl+]
+; 文字の選択を開始
+EditSelectCharAction=F8
+; 列の選択を開始
+EditSelectBoxAction=Shift+Ctrl+F8
+; 1 文字右まで選択
+EditCharRightExtendAction=
+; 1 文字左まで選択
+EditCharLeftExtendAction=
+; 1 単語右まで選択
+EditWordRightExtendAction=
+; 1 単語左まで選択
+EditWordLeftExtendAction=
+; 1 行上まで選択
+EditLineUpExtendAction=
+; 1 行下まで選択
+EditLineDownExtendAction=
+; 1 ページ上まで選択
+EditPageUpExtendAction=
+; 1 ページ下まで選択
+EditPageDownExtendAction=
+; 行頭まで選択
+EditLineStartExtendAction=
+; 行頭またはテキストの開始位置まで選択
+EditTextStartExtendAction=Shift+Home
+; 論理行の行頭まで選択
+EditLogicalLineStartExtendAction=
+; 行末まで選択
+EditLineEndExtendAction=
+; 論理行の行末まで選択
+EditLogicalLineEndExtendAction=
+; 文頭まで選択
+EditDocumentStartExtendAction=
+; 文末まで選択
+EditDocumentEndExtendAction=
+; 対応する括弧まで選択
+EditGoToBracketExtendAction=Shift+Ctrl+]
+; 1 文字右まで列を選択
+EditCharRightExtendBoxAction=
+; 1 文字左まで列を選択
+EditCharLeftExtendBoxAction=
+; 1 単語右まで列を選択
+EditWordRightExtendBoxAction=
+; 1 単語左まで列を選択
+EditWordLeftExtendBoxAction=
+; 1 行上まで列を選択
+EditLineUpExtendBoxAction=
+; 1 行下まで列を選択
+EditLineDownExtendBoxAction=
+; 1 ページ上まで列を選択
+EditPageUpExtendBoxAction=
+; 1 ページ下まで列を選択
+EditPageDownExtendBoxAction=
+; 行頭まで列を選択
+EditLineStartExtendBoxAction=
+; 行頭またはテキストの開始位置まで列を選択
+EditTextStartExtendBoxAction=Shift+Alt+Home
+; 行末まで列を選択
+EditLineEndExtendBoxAction=
+; 文頭まで列を選択
+EditDocumentStartExtendBoxAction=
+; 文末まで列を選択
+EditDocumentEndExtendBoxAction=
+; 選択範囲の取り消し
+EditCancelSelectionAction=
+; 検索
+SearchFindAction=Ctrl+F
+; 次を検索
+SearchNextAction=F3
+; 前を検索
+SearchPrevAction=Shift+F3
+; 次の文字列を検索
+SearchNextWordAction=Shift+Ctrl+Down
+; 前の文字列を検索
+SearchPrevWordAction=Shift+Ctrl+Up
+; すべて検索して選択
+SearchFindAllAndSelectAction=Shift+Ctrl+A
+; 選択範囲に次の候補を追加
+SearchAddNextMatchAction=Ctrl+D
+; スキップして次の候補を追加
+SearchSkipCurrentMatchAction=Shift+Ctrl+D
+; 選択範囲を元に戻す
+SearchUndoSelectionAction=Ctrl+U
+; 選択範囲をやり直し
+SearchRedoSelectionAction=Alt+U
+; 置換
+SearchReplaceAction=Ctrl+R,Ctrl+H
+; 検索文字列の強調を解除
+SearchEraseFindHighlightAction=Alt+F3
+; ファイルから検索
+SearchFindInFilesAction=Shift+Ctrl+F
+; ファイルから置換
+SearchReplaceInFilesAction=
+; Google で検索
+SearchGoogleAction=
+; Wikipedia で検索
+SearchWikipediaAction=
+; 編集モードの選択
+ViewModeSelectAction="Ctrl+K, M"
+; 編集モードの設定
+ViewModeCustomizeAction=
+; 折り返さない
+ViewWrapNoneAction=Ctrl+1
+; 指定文字数で折り返し
+ViewWrapByCharAction=Ctrl+2
+; ウィンドウの右端で折り返し
+ViewWrapByWindowAction=Ctrl+3
+; 縦書き
+ViewVerticalAction=
+; 色の反転
+ViewInvertColorAction=
+; 行番号
+ViewShowLineNumbersAction=
+; 行番号を絶対値で表示
+ViewLineNumbersAbsoluteAction=
+; 行番号を相対値で表示
+ViewLineNumbersRelativeAction=
+; 行番号を 10 行ごとに表示
+ViewLineNumbersIntervalAction=
+; 行番号を論理行で表示
+ViewLineNumbersLogicalAction=
+; ルーラー
+ViewShowRulerAction=
+; 改行
+ViewShowCRLFAction=
+; 折り返し
+ViewShowWrapAction=
+; EOF
+ViewShowEOFAction=
+; タブ
+ViewShowTabsAction=
+; 半角空白
+ViewShowSBSpacesAction=
+; 全角空白
+ViewShowDBSpacesAction=
+; CR と LF を区別して表示
+ViewCRLFDifferentAction=
+; 行番号の線
+ViewShowLineNumbersLineAction=
+; 折り返し線
+ViewShowWrapLineAction=
+; インデント ガイド
+ViewShowIndentGuidesAction=
+; 水平罫線
+ViewShowCaretLineAction=
+; 変更行を強調表示
+ViewShowChangedAction=
+; 自動インデント
+ViewAutoIndentAction=
+; 折り返しインデント
+ViewWrapIndentAction=
+; 標準バー
+ViewStandardBarAction=
+; マクロ バー
+ViewMacrosBarAction=
+; プラグイン バー
+ViewPluginsBarAction=
+; 外部ツール バー
+ViewToolsBarAction=
+; マーカー バー
+ViewMarkersBarAction=
+; ツール バーのタイトル
+ViewToolBarTitlesAction=
+; ツール バーを固定する
+ViewLockToolBarsAction=
+; マクロ バーにテキストを表示
+ViewMacrosBarLabelsAction=
+; マーカー バーにテキストを表示
+ViewMarkersBarTextAction=
+; 小アイコン
+ViewSmallIconsAction=
+; 中アイコン
+ViewMediumIconsAction=
+; 大アイコン
+ViewLargeIconsAction=
+; 特大アイコン
+ViewExtraLargeIconsAction=
+; ツール バーのカスタマイズ
+ViewToolBarCustomizeAction=
+; ステータス バー
+ViewStatusBarAction=
+; アウトプット バー
+ViewOutputBarAction=Alt+2
+; 全画面表示
+ViewFullScreenAction=F11
+; Zen モード
+ViewZenModeAction="Ctrl+K, Z"
+; タイプライター スクロール
+ViewTypewriterScrollAction=
+; マーカーに追加/削除
+ViewAddRemoveMarkerAction=
+; すべてのマーカーを有効にする
+ViewMarkerEnableAllAction=
+; すべてのマーカーを無効にする
+ViewMarkerDisableAllAction=
+; すべてのマーカーを削除する
+ViewMarkerDeleteAllAction=
+; 自動マーカー
+ViewToggleAutoMarkerAction=
+; マーカーの設定
+ViewMarkerCustomizeAction=
+; 大きいフォント サイズ
+ViewIncFontSizeAction="Ctrl+Num +",Ctrl+;
+; 小さいフォント サイズ
+ViewDecFontSizeAction="Ctrl+Num -",Ctrl+-
+; フォント サイズをリセット
+ViewResetFontSizeAction=Ctrl+0
+; 現在のフォント サイズを既定に設定
+ViewSetDefaultFontSizeAction=
+; フォントの設定
+ViewFontCustomizeAction=
+; Arduino で編集
+Modes8b1d4855fda4642f6470c9dbd28ddb0f=
+; Bat で編集
+Modes7ac04cf18b7606efb16ff9ecbca87825=
+; C# で編集
+Modesd7efa19fbe7d3972fd5adb6024223d74=
+; C++ で編集
+Modesf6f87c9fdcf8b3c3f07f93f1ee8712c9=
+; ColdFusion で編集
+Modes1e82fac810d24336c648dd94db177f80=
+; CSS で編集
+Modes2c56c360580420d293172f42d85dfbed=
+; Delphi で編集
+Modes564ea606c60aeee1ab2a41cd5b4a6824=
+; HSP で編集
+Modesff446cb1380e07479c29b55ddb3c4b40=
+; HTML で編集
+Modes4c4ad5fca2e7a3f74dbb1ced00381aa4=
+; INI で編集
+Modes19cf3bd8d7d38ff28b25e78c190c6262=
+; Java で編集
+Modesc71e8d17d41c21de0d260881d69662ff=
+; JavaScript で編集
+Modes53c6c951f4e8b9dff2989655588a21b5=
+; JSON で編集
+Modes0ecd11c1d7a287401d148a23bbd7a2f8=
+; JSP で編集
+Modes2d7fca4f5778e4b40b606914719bb294=
+; Markdown で編集
+Modes06d53571201b4c2aa16554971af6365e=
+; Perl で編集
+Modesd4eeea6c854fe3699d3a8ccbf95fd57a=
+; PerlScript で編集
+Modesa964b11b8f5da4bea7760fe9397d9377=
+; PHP で編集
+Modes2fec392304a5c23ac138da22847f9b7c=
+; PowerShell で編集
+Modes0a6fd2c13f0ed0e6b8860decffc4bf9a=
+; Python で編集
+Modes0aff891c0d43dc127e64bbc28a4ec4e8=
+; RHTML で編集
+Modeseb77cf8b7e573a23bb9f89a6f458bdb4=
+; Ruby で編集
+Modes948ea267d4a32b3d91b837b54298de0a=
+; SQL で編集
+Modes9778840a0100cb30c982876741b0b5a2=
+; TeX で編集
+Modes9ed6f50f63c3af102f036468321d142b=
+; Text で編集
+Modes61a96ffcb251bb9bf0abf8fec19d0ea8=
+; TypeScript で編集
+Modes4b27e3a7eaf6c74c4c89b2d707b3447e=
+; UWSC で編集
+Modes57f917ddf0f278ccea76e13fc8c5f066=
+; VBScript で編集
+Modes22de0dc7872779e1dd84efba78253a22=
+; VisualBasic で編集
+Modes92adfd0ee7571c00c31c3099653807a3=
+; Windows Script で編集
+Modes6e9664660b429a3657c60ba104d586fb=
+; x86 Assembler で編集
+Modesa2b3c52877d1333bc493b75d12057c17=
+; XML で編集
+Modes3501bb093d363810b671059b9cfed3f8=
+; マクロの記録/停止
+MacrosRecordAction=Shift+F4
+; マクロの実行
+MacrosRunAction=F4
+; オプションを指定してマクロを実行
+MacrosRunOptionsAction=
+; マクロの停止
+MacrosStopAction=
+; マクロを保存
+MacrosSaveAction=
+; マクロを編集
+MacrosEditAction=
+; マクロを選択
+MacrosSelectAction=
+; このマクロを選択
+MacrosSelectThisAction=
+; マクロのカスタマイズ
+MacrosCustomizeAction=
+; 空行の削除
+Macrosae45e78a2e5f30575dee95ef13b38b13=
+; 重複行の削除
+Macros371c7c20e1274358a32eba0df7228877=
+; 番号の挿入
+Macrose9d043d420bae4389e023f73d1e176b9=
+; 昇順に並べ替え (A から Z)
+Macros458ef2127327159a3110c71d815d7916=
+; 降順に並べ替え (Z から A)
+Macros26837b66cfd3a371187e21f0565098fa=
+; 一致する行を抽出
+Macrosa1a3cb5090851282b50a6f711dacdc29=
+; 一致する行を除外
+Macros686b73c83ae3a194ef0b5a1cb6f880c2=
+; Mery用-行を上へ移動.js
+Macrose6ee5c4cd7bb9c3169fea4d01353a80d=Alt+Up
+; Mery用-行を下へ移動.js
+Macros555a16bc7f9fe8f4fae4d801603941af=Alt+Down
+; Mery用-行を上へコピー.js
+Macrosd6d05fd01abbd6da6b12100353515f95=Shift+Alt+Up
+; Mery用-行を下へコピー.js
+Macros893b8ee4d6973dd4df6b6af136787c8a=Shift+Alt+Down
+; オプション
+ToolsOptionsAction=
+; 単語補完
+ToolsCompletionAction=Ctrl+Space
+; ドキュメントの整形
+ToolsHTMLFormatAction="Ctrl+K, Ctrl+D"
+; ドキュメントのエラーをチェック
+ToolsHTMLCheckErrorsAction=
+; SQL 整形
+ToolsSQLFormatAction=
+; プラグインの設定
+ToolsPluginCustomizeAction=
+; 外部ツールの設定
+ToolsToolCustomizeAction=
+; ツール ジョブの中止
+ToolsTerminateToolAction=
+; ポップアップ メニューの設定
+ToolsPopupMenuCustomizeAction=
+; 設定のインポート
+ToolsImportSettingsAction=
+; 設定のエクスポート
+ToolsExportSettingsAction=
+; すべての設定をリセット
+ToolsResetSettingsAction=
+; アウトライン
+Plugins2255d5134e5e6987f299bbedcc7003ef=
+; Microsoft Edge
+Toolsa5c41f715c1b8a880253846c025624e9=
+; エクスプローラー
+Tools5af5bf9392e6ed80b6d0621c0f6af5e4=
+; コマンド プロンプト
+Toolsb2fa0971fe25293c2bce5fabdc3ab9bb=
+; PowerShell
+Tools3d265b4e1eeef0ddf17881fa003b18cc=
+; 既定のプログラム
+Toolsa28a1203e33c37a6f077f8de0d08f763=
+; 常に手前に表示
+WindowAlwaysTopAction=
+; 上下に分割
+WindowSplitHorzAction=Ctrl+F12
+; 左右に分割
+WindowSplitVertAction=
+; 新しいグループ
+WindowNewGroupAction=
+; 新しい上下グループ
+WindowNewGroupHorzAction=
+; 新しい左右グループ
+WindowNewGroupVertAction=
+; 次のグループに移動
+WindowMoveNextGroupAction=
+; 前のグループに移動
+WindowMovePrevGroupAction=
+; 次のペイン
+WindowNextPaneAction=F6
+; 前のペイン
+WindowPrevPaneAction=Shift+F6
+; アクティブなペイン
+WindowActivePaneAction=
+; タブを有効にする
+WindowCombineAction=
+; 1 行上へスクロール
+WindowScrollLineUpAction=
+; 1 行下へスクロール
+WindowScrollLineDownAction=
+; 重ねて表示
+WindowCascadeAction=
+; 上下に並べて表示
+WindowTileHorzAction=
+; 左右に並べて表示
+WindowTileVertAction=
+; すべて最小化
+WindowMinimizeAllAction=
+; 次の文書
+WindowNextAction=Ctrl+Tab
+; 前の文書
+WindowPrevAction=Shift+Ctrl+Tab
+; 右の文書
+WindowRightAction=
+; 左の文書
+WindowLeftAction=
+; 次へ移動
+WindowMoveNextAction=Shift+Ctrl+PgDn
+; 前へ移動
+WindowMovePrevAction=Shift+Ctrl+PgUp
+; マーカーを表示
+WindowShowMarkersAction=
+; オンライン ヘルプ
+HelpOnlineAction=F1
+; キーボード マップ
+HelpKeyboardMapAction="Ctrl+K, Ctrl+R"
+; バージョン情報
+HelpAboutAction=
+
