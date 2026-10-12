@@ -1,0 +1,3 @@
+# ClipboardHistory: 本体・履歴データ(.dat)などは管理しない。設定ファイルのみ git 管理
+tools/ClipboardHistory/*
+!tools/ClipboardHistory/Config.txt
