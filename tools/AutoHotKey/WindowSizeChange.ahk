@@ -45,7 +45,7 @@ WinSizeChange(direction := "H", action := "+") {
 ;   + Shift
 ;   & 同時押し(例:Numpad0 & Numpad1)
 ;===============================================================================
-; アクティブウィンドウのサイズ変更 Win + Ctrl + Arrow key
+; アクティブウィンドウのサイズ変更 : Win + Alt + Arrow key
 #!Up::WinSizeChange("H", "-")
 #!Down::WinSizeChange("H", "+")
 #!Left::WinSizeChange("W", "-")

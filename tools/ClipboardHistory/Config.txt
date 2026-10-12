@@ -29,52 +29,53 @@
 ;　■で始まる項目は、選択されているテキスト（非選択時はクリップボードの文字列）に対して実行されるコマンドです。
 
 @NoteHotkey=Shift,360
-+text list(&a)
-  &m メール  | personal@abc.mn
-  -
+&m メール1 | hi.ohbayashi@gmail.com
+&n メール2 | plenarc.info@gmail.com
+-
+  +text list(&a)
   +よく使うコマンド(&c)
     &1 pnpm-lock.yaml削除 | rm pnpm-lock.yaml && rm -rf node_modules/ && pnpm store prune
-    &e wsl - projects | \\wsl.localhost\Ubuntu\home\aaa\projects
+    &e wsl - projects | \\wsl.localhost\Ubuntu\home\ohbayashi\projects
     &s 臨時ssh | ssh -i .vagrant/machines/default/virtualbox/private_key -p 2223 vagrant@127.0.0.1
-  ..
-  -
-  +WSL(&w)
-    ; .ssh/config、.bashrc 参照
-    &1 アカウント切り替え aaa | ssh -T github-aaa && gitf
-    &2 アカウント切り替え bbb | ssh -T github-bbb && gitp
-    &a apt-get update | clear && sudo apt-get update && sudo apt-get upgrade -y
-    &h history | history `| grep $0
-    ; 表示された番号で実行するには`!番号`で
-    &g git更新 | clear && sudo add-apt-repository ppa:git-core/ppa && sudo apt update && sudo apt install git && git --version
-    &p pnpm更新 | clear && corepack install -g pnpm@10.5.2
-    &n npm publish | npm login && npm publish
-    &n node install | curl -fsSL https://deb.nodesource.com/setup_lts.x `| sudo -E bash -
-    &r repositoryの新規追加 | git config --global --add safe.directory "//wsl.localhost/Ubuntu/home/aaa/projects/$0"
-  ..
-  -
-  +Powershell(&p)
-    &1 which | gcm $0 `| fl
-    &2 pnpm更新 | iwr https://get.pnpm.io/install.ps1 -useb `| iex
   ..
   -
   +VS Code(&v)
     &j jsのみ  | **/resources/assets/**/*.js
+    &r 再読み込み | Developer: Reload Window
   ..
   -
   +JavaScript(&j)
-  &l log  | console.log(' [ 1 ] ');
-  &l log table  || RegExReplace | s).+ |  console.table($0);
-  &l log literal  | let name = '一郎';`r`nconsole.log(`僕の名前は${name}です。`);
-  ..
-  +shell:(&s)
-  &p profile       | shell:profile
-  &p program files | shell:ProgramFiles
-  &s send to       | shell:SendTo
-  &s start up      | shell:Startup
+    &l log  | console.log(' [ 1 ] ');
+    &l log table  || RegExReplace | s).+ |  console.table($0);
+    &l log literal | let name = '一郎';`r`nconsole.log(`僕の名前は${name}です。`);
   ..
   -
-  &s スタートアップフォルダー  | %USERPROFILE%\AppData\Roaming\Microsoft\Windows\Start Menu\Programs\Startup
-  &y システムプロパティの表示  | %WINDIR%\System32\SystemPropertiesComputerName.exe
+  &s スタートアップ | shell:startup
+  &o 送る(SendTo) | shell:SendTo
+  &t タスクマネージャー | %WINDIR%\System32\taskmgr.exe
+  &y システムプロパティの表示(環境変数) | %WINDIR%\System32\SystemPropertiesComputerName.exe
+..
++WSL(&w)
+  ; .ssh/config、.bashrc 参照
+  &a apt-get update | clear && sudo apt-get update && sudo apt-get upgrade -y
+  &h history | history `| grep $0
+  ; 表示された番号で実行するには`!番号`で
+  &g git更新 | clear && sudo add-apt-repository ppa:git-core/ppa && sudo apt update && sudo apt install git && git --version
+  &p pnpm更新 | clear && corepack install -g pnpm@latest && corepack prepare pnpm@latest --activate && corepack use pnpm@latest
+  &t tree | tree -L 4 -I build\`|node_modules\`|tree.txt `| sed 's/│  /│ /g; s/├── /├ /g; s/└── /└ /g' > tree.txt
+  &n npm publish | npm login && npm publish
+  &n node install | curl -fsSL https://deb.nodesource.com/setup_lts.x `| sudo -E bash -
+  &r repositoryの新規追加 | git config --global --add safe.directory "//wsl.localhost/Ubuntu/home/ohb/projects/$0"
+..
+-
++Powershell(&p)
+  &1 which | gcm $0 `| fl
+  &2 pnpm更新 | iwr https://get.pnpm.io/install.ps1 -useb `| iex
+  &3 git safe.directory追加 | git config --global --add safe.directory "//wsl.localhost/Ubuntu/home/ohb/projects/*"
+..
+-
++claude(&c)
+  &1 VSCodeウィンドウのみ再起動(Ctrl+Shift+P後)  | Developer: Reload Window
 ..
 +Excel(&x)
   &1 No. | =N(OFFSET(RC,-1,0))+1
@@ -96,7 +97,7 @@
   &le lint enable    | <!-- markdownlint-enable -->`r`n
 ..
 +Git(&g)
-  &r rename(mv)      | git mv
+  &r rename(mv)      | git mv 
   &l status          | git status
   &t file delete     | git rm FILE && git commit -m "delete."
   &a commit漏れ      | git add FILE && git commit --amend
@@ -106,43 +107,60 @@
   &1 →  |` → `
   &2 ←  |` ← `
 ..
-+日付・時刻(&D)
-  &1 yyyyMMdd             | yyyyMMdd || Date
-  &2 yyyyMMdd_HHmmss      | yyyyMMdd_HHmmss || Date
-  &3 yyyy/MM/dd HH:mm:ss  | yyyy/MM/dd HH:mm:ss || Date
-  &4 yyyy/MM/dd(ddd)      | yyyy/MM/dd(ddd) || Date
-  &5 yyyy/MM/dd           | yyyy/MM/dd || Date
-  &6 yyyy年M月d日(ddd)    | yyyy年M月d日(ddd) || Date
-  &7 d日(ddd)             | d日(ddd) || Date
-  &8 M/d(ddd)             | M/d(ddd) || Date
++日付(&D)
+  &1 yyyy-MM-dd           |  yyyy-MM-dd  || Date
+  &2 yyyy-MM-dd(ddd)      |  yyyy-MM-dd(ddd)  || Date
+  &3 yyyy-MM-dd HH:mm:ss  |  yyyy-MM-dd HH:mm:ss  || Date
+  &4 yyyyMMdd             |  yyyyMMdd  || Date
+  &5 yyyyMMdd-HHmmss      |  yyyyMMdd_HHmmss  || Date
+  &6 yyyy年M月d日(ddd)    |  yyyy年M月d日(ddd)  || Date
+  &7 d日(ddd)             |  d日(ddd)  || Date
+  &8 M/d(ddd)             |  M/d(ddd)  || Date
+..
++日付 x日後(&D)
+  &1 yyyy-MM-dd           |  yyyy-MM-dd  || Date | ~INPUT:+D1
+  &2 yyyy-MM-dd(ddd)      |  yyyy-MM-dd(ddd)  || Date | ~INPUT:+D1
+  &3 yyyy-MM-dd HH:mm:ss  |  yyyy-MM-dd HH:mm:ss  || Date | ~INPUT:+D1
+  &4 yyyyMMdd             |  yyyyMMdd  || Date | ~INPUT:+D1
+  &5 yyyyMMdd-HHmmss      |  yyyyMMdd_HHmmss  || Date | ~INPUT:+D1
+  &6 yyyy年M月d日(ddd)    |  yyyy年M月d日(ddd)  || Date | ~INPUT:+D1
+  &7 d日(ddd)             |  d日(ddd)  || Date | ~INPUT:+D1
+  &8 M/d(ddd)             |  M/d(ddd)  || Date | ~INPUT:+D1
+..
++住所(&A)
+  &1 address1 | 1-13-2
+  &2 address2 | Kamiishiwara
+  &3 city   | Chofu Shi
+  &4 region | Tokyo to
+  &a All    | 1-13-2, Kamiishiwara, Chofu Shi, Tokyo To, 182-0035, Japan
 ..
 +文字コード(&1)
-  &1 タブ文字 | `  `
-  &2 CrLf     | `r`n
-  &3 Cr       | `r
-  &4 Lf       | `n
+  &1 タブ文字  |  `  `
+  &2 CrLf      |  `r`n
+  &3 Cr        |  `r
+  &4 Lf        |  `n
   &5 html 半角スペース(改行しない)  |  &nbsp;
   &6 html n幅スペース  |  &ensp;
   &7 html m幅スペース  |  &emsp;
   &8 html <  |  &lt;
   &9 html >  |  &gt;
   &0 html "  |  &quot;
-  &a html && |  &amp;
-  &b html × |  &times;
+  &a html &&  |  &amp;
+  &b html ×  |  &times;
   &c html ÷  |  &divide;
 ..
-+会社情報(&5)
-  &0 proxy    | idaaa{Tab}password{Enter} | KeyStroke
-  &1 会社名   | 株式会社ABC
-  &3 郵便番号 | 123-4321
-  &4 住所1    | 東京都a区b1-2-3
-  &5 住所2    | Cビル4F
-  &6 住所英   | C Bld., b, a Ku, Tokyo To, 123-4321, Japan
-  &7 URL      | https://company-name.come/
-  &8 TEL      | 03-1234-4321
-  &9 携帯     | 090-1234-4321
-  &a Google Map (street view) | https://goo.gl/maps/1111
-..
+;*記号[一般1](&2)
+;  ◆|■|▲|▼|★|●|◇|□|△|▽|☆|○
+;  ←|→|↑|↓|…|‥|―|～|／|＼|￣|＿
+;  【】|『』|〈〉|《》|〔〕|［］|‘’|“”
+;..
+;*記号[一般2](&3)
+;  〒|※|§|¶|♭|♪|〆|㈱|㈲|㈹|㊤|㊥|㊦|㊧|㊨
+;  №|㍾|㍽|㍼|㍻|℡|㏍|ヾ|ゝ|ゞ|〃|仝|々|♂|♀|⇒|⇔
+;..
+;*記号[数字](&4)
+;  ①|②|③|④|⑤|⑥|⑦|⑧|⑨|⑩||Ⅰ|Ⅱ|Ⅲ|Ⅳ|Ⅴ|Ⅵ|Ⅶ|Ⅷ|Ⅸ|Ⅹ
+;..
 -
 +テキスト修飾(&T)
   ■> 引用記号(&A)    || RegExReplace | m)^ | > `
@@ -168,32 +186,31 @@
 +テキスト変換(&U)
   ■キャメルケースに変換(&c)  || RegExReplace | (^`|_)(.) | $U{2}
   ■パスカルケースに変換(&p)  || RegExReplace | (_)(.) | $U{2}
-;  ■スネークケースに変換(&s) || RegExReplace | ^([A-Z])`|([A-Z]) | $L{1}_$L{2}
+;  ■スネークケースに変換(&s)  || RegExReplace | ^([A-Z])`|([A-Z]) | $L{1}_$L{2}
   ■スネークケースに変換(&s)  || RegExReplace | ([A-Z]) | _$L{1}
-  ■ケバブケースに変換(&s)    || RegExReplace | ([A-Z]) | -$L{1}
   -
-  ■大文字に変換(&b) || RegExReplace | s).+ | $U{0}
-  ■小文字に変換(&s) || RegExReplace | s).+ | $L{0}
+  ■大文字に変換(&b)    || RegExReplace | s).+ | $U{0}
+  ■小文字に変換(&s)    || RegExReplace | s).+ | $L{0}
   -
-  ■半角に変換(&k)   || SingleStr
-  ■全角に変換(&l)   || DoubleStr
+  ■半角に変換(&k)    || SingleStr
+  ■全角に変換(&l)    || DoubleStr
   -
-  ■カタカナ→ひらがな変換(&m) || HiraStr
-  ■ひらがな→カタカナ変換(&n) || KataStr
+  ■カタカナ→ひらがな変換(&m)  || HiraStr
+  ■ひらがな→カタカナ変換(&n)  || KataStr
   -
-  ■URLエンコード  || EncodeURL
+  ■URLエンコード    || EncodeURL
   ■URLデコード    || EncodeURL | 1
   -
-  ■base64エンコード  || EncodeBase64
+  ■base64エンコード    || EncodeBase64
   ■base64デコード    || EncodeBase64 | 1
-  ■base64エンコード(Data URI) || EncodeBase64 | 0 | Binary | 1
-  ■base64デコード(バイナリ)   || EncodeBase64 | 1 | Binary
+  ■base64エンコード(Data URI)  || EncodeBase64 | 0 | Binary | 1
+  ■base64デコード(バイナリ)  || EncodeBase64 | 1 | Binary
 ;  -
 ;  ■改行整形(36文字)(&S)    || FormatLine | 36
 ;  ■改行整形(36文字+ぶら下げ)(&T)  || FormatLine | 36 | ,,,.,、,。,，,．,？,！,）,」,』,!,),?,\,]
   -
   ■HTML エスケープ(&U)    || StrReplace | & | &amp; || StrReplace | < | &lt; || StrReplace | > | &gt; || StrReplace | " | &quot;
-  ■HTML 半角スペース(&s)  || StrReplace | & | &nbsp; || StrReplace | < | &lt; || StrReplace | > | &gt; || StrReplace | " | &quot;
+  ■HTML 半角スペース(&s)    || StrReplace | & | &nbsp; || StrReplace | < | &lt; || StrReplace | > | &gt; || StrReplace | " | &quot;
   -
   ■任意の文字を置き換え(&V)  || RegExReplace | ~INPUT | ~INPUT
   ■正規表現で置換(行末に<br>追加)(&W)|| RegExReplace | m)$ | <br>
@@ -202,19 +219,19 @@
 +ファイル関連(&F)
   ファイルを開く...(&A)    || <#blank,,#run> || FilePath
   -
-  ファイルのフルパス名...(&B) || FilePath
-  フォルダのフルパス名...(&C) || FolderPath
+  ファイルのフルパス名...(&B)  || FilePath
+  フォルダのフルパス名...(&C)  || FolderPath
   -
-  指定ファイルの差し込み(&D) || PasteFile | ReadMe.txt
+  指定ファイルの差し込み(&D)  || PasteFile | ReadMe.txt
   ファイルの差し込み...(&E)  || PasteFile
   -
-  ■ファイルに追記...(&F)   || AppendFile | `r`n
+  ■ファイルに追記...(&F)    || AppendFile | `r`n
   ■指定ファイルに追記(&G)  || AppendFile | `r`n------------------`r`n | ~BLANK | 簡易メモ.txt | UTF-8
   ■ファイルを上書き(&H)    || AppendFile | ~BLANK | ~BLANK | ~BLANK | UTF-8 | delete
 ..
 +クリップボード関連(&C)
   ■分割コピー(改行区切り)(&A)        || SplitCopy
-  ■分割コピー(改行区切り+逆順)(&B)   || SplitCopy | ~NULL | ~NULL | R
+  ■分割コピー(改行区切り+逆順)(&B)      || SplitCopy | ~NULL | ~NULL | R
   ■分割コピー(タブ区切り)(&C)        || SplitCopy | `  `
   -
   ■キープ(&D)            || Keep
@@ -267,9 +284,9 @@
 ■選択テキストの文字数(&L)    || StrLen
 ■計算(&S)        || Calc
 -
-■Googleで検索(&G)      || <#copy,,#run> || StrReplace | # | %23 || RegExReplace | ^ | https://www.google.co.jp/search?hl=ja&lr=lang_ja&q=
-■Googleで翻訳(&te) 英→日  || <#copy,,#run> || StrReplace | # | %23 || RegExReplace | ^ | https://translate.google.co.jp/?hl=ja&tab=cT#en/ja/
-■Googleで翻訳(&te) 日→英  || <#copy,,#run> || StrReplace | # | %23 || RegExReplace | ^ | https://translate.google.co.jp/?hl=ja&tab=cT#ja/en/
+■Googleで検索(&G)         || <#copy,,#run> || StrReplace | # | %23 || RegExReplace | ^ | https://www.google.co.jp/search?hl=ja&lr=lang_ja&q=
+■Googleで翻訳(&te) 英→日 || <#copy,,#run> || StrReplace | # | %23 || RegExReplace | ^ | https://translate.google.co.jp/?hl=ja&tab=cT#en/ja/
+■Googleで翻訳(&te) 日→英 || <#copy,,#run> || StrReplace | # | %23 || RegExReplace | ^ | https://translate.google.co.jp/?hl=ja&tab=cT#ja/en/
 -
 クリップボードマネージャーを開く(&W)...    || OpenManager
 登録済み定型文コマンドの一覧・検索(&E)... || OpenManager | 1
@@ -323,17 +340,17 @@
 
 -
 +高度な使い方のサンプル(&N)
-  ReadMe.txtを開く(&A)     | ReadMe.txt | <,,#run>
-  URLを開く(&B)            | http://blank-note.sakura.ne.jp/ | <,,#run>
+  ReadMe.txtを開く(&A)   | ReadMe.txt | <,,#run>
+  URLを開く(&B)          | http://blank-note.sakura.ne.jp/ | <,,#run>
   -
-  プロファイル切り替え-Config.txt(&C)      | ClipboardHistory_x64.exe /Profile "Config.txt" | <,,#run>
-  プロファイル切り替え-ConfigB.txt(&D)     | ClipboardHistory_x64.exe /Profile "ConfigB.txt" | <,,#run>
+  プロファイル切り替え-Config.txt(&C)   | ClipboardHistory_x64.exe /Profile "Config.txt" | <,,#run>
+  プロファイル切り替え-ConfigB.txt(&D)  | ClipboardHistory_x64.exe /Profile "ConfigB.txt" | <,,#run>
   -
   20文字以上のクリップボード履歴を検索して20桁に整形して貼り付け(&E)... | .{20,} | OpenManager || FormatLine | 20
   クリップボード履歴メニューから選んで引用記号を付けて貼り付け(&F)...   || OpenHistory || RegExReplace | m)^ | > `
   -
-  カーソル行の行頭を●でマーク(&G)      || <,#line> || RegExReplace | ^[○●]`|^ | ●
-  カーソル行の行頭を○でマーク(&H)      || <,#line> || RegExReplace | ^[○●]`|^ | ○
+  カーソル行の行頭を●でマーク(&G) || <,#line> || RegExReplace | ^[○●]`|^ | ●
+  カーソル行の行頭を○でマーク(&H) || <,#line> || RegExReplace | ^[○●]`|^ | ○
   -
   ファイルを読み込んで20桁に整形して貼り付け(&I)    || PasteFile || FormatLine | 20 | ,,,.,、,。,，,．,？,！,）,」,』,!,),?,\,]
   5-10番目の履歴からURLを削除してファイルに保存(&J)  || ExportHistory | `r`n-----------`r`n | 5-10 || RegExReplace | http(s)?://([\w-]+\.)+[\w-]+(/[\w- ./?%&=]*)? | ~BLANK || AppendFile | ~BLANK | ~BLANK | ~BLANK | UTF-8 | delete
@@ -418,7 +435,7 @@
 ;　@RecordOnManager      =【クリップボードマネージャーが非表示の時に自動的に履歴の更新をサスペンドするかどうか】
 ;=====================================================================
 @SaveFile=ClipboardHistory.dat
-@MaxHistoryCount=500
+@MaxHistoryCount=1000
 @MaxHistoryLength=16382
 @HistoryHotkey=Ctrl,360
 @SimpleHistory=0
@@ -438,14 +455,14 @@
 @DirectHotkey=
 ||OpenManager
 @ExcludeEXE=
-@ExitFifoPaste=0,1
+@ExitFifoPaste=0,1,0
 @KeepAfterPaste=1,0
 @ManagerClearResult=1
 @ManagerFollowCursor=1
 @ManagerHideNumber=0
 @ManagerSize=350,405,50,0
 @ManagerTree=1,1,1,1
-@MenuLength=47
+@MenuLength=47,20,10,10,30
 @PasteMethod=^{v}
 @PreviewSize=
 @RecordMethod=0
@@ -458,4 +475,14 @@
 @ManagerColor=
 @ManagerHideGrid=0
 @ManagerHideSearch=0
-@DirectHotkey=
+
+@DirectHotkey=ONCOPY
+
+@AddUtilityMenu=1
+@DarkMode=1
+@DisableIme=0
+@ManagerHideTitle=0
+@ManagerSingleClick=0
+@MenuDir=
+@SimpleColor=
+@SimpleHeader=0
